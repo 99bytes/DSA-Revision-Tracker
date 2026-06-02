@@ -26,14 +26,14 @@ export function SearchFilter({
   availableTags
 }: SearchFilterProps) {
   return (
-    <div className="flex flex-col gap-4 p-4 border rounded-lg bg-card">
-      <div className="flex items-center gap-2">
-        <Search className="w-4 h-4 text-muted-foreground" />
+    <div className="flex flex-col gap-4 p-4 rounded-xl border bg-card/60 backdrop-blur-sm shadow-sm">
+      <div className="relative flex items-center">
+        <Search className="w-4 h-4 text-muted-foreground absolute left-3" />
         <Input 
           placeholder="Search by question name..." 
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="flex-1"
+          className="flex-1 border-0 bg-muted/60 rounded-lg h-10 pl-10 focus-visible:ring-1"
           data-testid="input-search"
         />
       </div>

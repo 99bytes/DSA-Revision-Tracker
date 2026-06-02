@@ -8,6 +8,27 @@ import { format } from "date-fns";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "wouter";
 
+export function ConfidenceDots({ level }: { level: number }) {
+  const colors = ["bg-red-500", "bg-red-400", "bg-amber-400", "bg-emerald-400", "bg-emerald-500"];
+  return (
+    <div className="flex items-center justify-center gap-1">
+      <div className="flex items-center gap-0.5">
+        {[1,2,3,4,5].map(i => (
+          <div key={i} className={`w-2 h-2 rounded-full transition-opacity ${i <= level ? colors[level-1] : "bg-muted"}`} />
+        ))}
+      </div>
+      <span className="text-[10px] text-muted-foreground w-3 font-mono">{level}</span>
+    </div>
+  );
+}
+
+const platformColors: Record<string, string> = {
+  LeetCode: "bg-orange-500/10 text-orange-600 border-orange-200 dark:border-orange-900 dark:text-orange-400",
+  GFG: "bg-green-500/10 text-green-700 border-green-200 dark:border-green-900 dark:text-green-400",
+  Codeforces: "bg-blue-500/10 text-blue-700 border-blue-200 dark:border-blue-900 dark:text-blue-400",
+  Other: "bg-muted text-muted-foreground"
+};
+
 interface QuestionTableProps {
   questions: Question[];
   onMarkRevised: (q: Question) => void;
@@ -18,7 +39,7 @@ interface QuestionTableProps {
 export function QuestionTable({ questions, onMarkRevised, onDelete, onSelectQuestion }: QuestionTableProps) {
   if (questions.length === 0) {
     return (
-      <div className="py-12 text-center border rounded-lg bg-card">
+      <div className="py-12 text-center border rounded-lg bg-card/60 backdrop-blur-sm shadow-sm">
         <h3 className="text-lg font-medium">No questions found</h3>
         <p className="text-muted-foreground text-sm mt-1">Try adjusting your filters or add a new question.</p>
       </div>
@@ -26,22 +47,22 @@ export function QuestionTable({ questions, onMarkRevised, onDelete, onSelectQues
   }
 
   const getRowColor = (confidence: number) => {
-    if (confidence <= 2) return "bg-destructive/10 hover:bg-destructive/20";
-    if (confidence === 3) return "bg-yellow-500/10 hover:bg-yellow-500/20";
-    return "bg-green-500/10 hover:bg-green-500/20";
+    if (confidence <= 2) return "border-l-red-500 bg-red-500/5 hover:bg-red-500/10";
+    if (confidence === 3) return "border-l-amber-400 bg-amber-400/5 hover:bg-amber-400/10";
+    return "border-l-emerald-500 bg-emerald-500/5 hover:bg-emerald-500/10";
   };
 
   return (
-    <div className="border rounded-lg overflow-hidden">
+    <div className="border rounded-xl overflow-hidden bg-card/60 backdrop-blur-sm shadow-sm">
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Question</TableHead>
+            <TableHead className="pl-6">Question</TableHead>
             <TableHead>Platform</TableHead>
             <TableHead>Tags</TableHead>
             <TableHead className="text-center">Confidence</TableHead>
             <TableHead>Next Rev.</TableHead>
-            <TableHead className="text-right">Actions</TableHead>
+            <TableHead className="text-right pr-6">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -56,51 +77,53 @@ export function QuestionTable({ questions, onMarkRevised, onDelete, onSelectQues
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className={`group transition-colors ${getRowColor(q.confidence)} border-b`}
+                  className={`group transition-colors border-l-4 border-b ${getRowColor(q.confidence)}`}
                 >
-                  <TableCell>
+                  <TableCell className="pl-6">
                     <button 
-                      className="font-medium text-left hover:underline focus:outline-none focus:underline"
+                      className="font-semibold text-foreground hover:text-primary transition-colors text-left focus:outline-none"
                       onClick={() => onSelectQuestion(q)}
                       data-testid={`btn-view-${q.id}`}
                     >
                       {q.name}
                     </button>
                     {overdue && (
-                      <Badge variant="destructive" className="ml-2 py-0 h-5 text-[10px]">
+                      <Badge className="ml-2 animate-pulse bg-red-500 hover:bg-red-600 text-white border-0 text-[10px] py-0 h-5">
                         Revise Now
                       </Badge>
                     )}
                   </TableCell>
                   <TableCell>
-                    <Badge variant="outline" className="bg-background">{q.platform}</Badge>
+                    <Badge variant="outline" className={`${platformColors[q.platform] || platformColors.Other}`}>
+                      {q.platform}
+                    </Badge>
                   </TableCell>
                   <TableCell>
                     <div className="flex flex-wrap gap-1">
                       {q.tags.slice(0, 2).map(t => (
-                        <span key={t} className="text-[10px] bg-background border px-1.5 py-0.5 rounded text-muted-foreground">
+                        <span key={t} className="text-[11px] bg-primary/8 text-primary border border-primary/20 px-2 py-0.5 rounded-full font-medium">
                           {t}
                         </span>
                       ))}
                       {q.tags.length > 2 && (
-                        <span className="text-[10px] bg-background border px-1.5 py-0.5 rounded text-muted-foreground">
+                        <span className="text-[11px] bg-primary/8 text-primary border border-primary/20 px-2 py-0.5 rounded-full font-medium">
                           +{q.tags.length - 2}
                         </span>
                       )}
                     </div>
                   </TableCell>
-                  <TableCell className="text-center font-bold">
-                    {q.confidence}
+                  <TableCell className="text-center">
+                    <ConfidenceDots level={q.confidence} />
                   </TableCell>
-                  <TableCell className="text-sm">
+                  <TableCell className="text-sm font-medium">
                     {format(new Date(nextRev), "MMM d, yyyy")}
                   </TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <TableCell className="text-right pr-6">
+                    <div className="flex items-center justify-end gap-2 opacity-40 group-hover:opacity-100 transition-opacity">
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="h-8 w-8 text-primary hover:text-primary/80"
+                        className="h-8 w-8 text-primary hover:text-primary hover:bg-primary/10"
                         onClick={() => onMarkRevised(q)}
                         title="Mark as Revised Today"
                         data-testid={`btn-revise-${q.id}`}
@@ -113,7 +136,7 @@ export function QuestionTable({ questions, onMarkRevised, onDelete, onSelectQues
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="h-8 w-8 text-destructive hover:text-destructive/80"
+                        className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
                         onClick={() => onDelete(q.id)}
                         title="Delete"
                         data-testid={`btn-delete-${q.id}`}

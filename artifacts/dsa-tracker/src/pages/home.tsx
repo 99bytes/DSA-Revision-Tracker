@@ -91,17 +91,17 @@ export default function Home() {
 
   return (
     <div className="min-h-[100dvh] bg-background">
-      <header className="border-b bg-card">
+      <header className="border-b bg-card/80 backdrop-blur-md sticky top-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded bg-primary text-primary-foreground flex items-center justify-center font-bold">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-indigo-600 text-white flex items-center justify-center font-extrabold text-xs tracking-tight shadow-lg">
               DSA
             </div>
-            <h1 className="text-xl font-bold tracking-tight">Revision Tracker</h1>
+            <h1 className="text-xl font-extrabold tracking-tight bg-gradient-to-r from-foreground to-foreground/60 bg-clip-text text-transparent">Revision Tracker</h1>
           </div>
           <div className="flex items-center gap-4">
             <ThemeToggle />
-            <Link href="/add" className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4">
+            <Link href="/add" className="inline-flex items-center justify-center rounded-xl text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 shadow-md shadow-primary/25">
               <Plus className="w-4 h-4 mr-2" />
               Add Question
             </Link>
@@ -114,7 +114,10 @@ export default function Home() {
 
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold tracking-tight">Your Tracked Questions</h2>
+            <h2 className="text-xl font-bold tracking-tight flex items-center gap-2">
+              Your Tracked Questions
+              <span className="bg-muted text-muted-foreground text-xs px-2 py-0.5 rounded-full font-medium">{filteredAndSortedQuestions.length}</span>
+            </h2>
           </div>
           
           <SearchFilter 

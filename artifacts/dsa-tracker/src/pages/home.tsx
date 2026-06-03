@@ -122,8 +122,8 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-[100dvh] bg-background">
-      <header className="border-b border-black/5 dark:border-white/5 bg-background/80 dark:bg-background/10 backdrop-blur-2xl sticky top-0 z-50 shadow-sm">
+    <div className="h-[100dvh] flex flex-col bg-background overflow-hidden">
+      <header className="shrink-0 border-b border-black/5 dark:border-white/5 bg-background/80 dark:bg-background/10 backdrop-blur-2xl z-50 shadow-sm">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-9 h-9 rounded-xl bg-black dark:bg-neutral-200 text-white dark:text-black flex items-center justify-center font-extrabold text-xs tracking-tight shadow-md shrink-0">
@@ -169,39 +169,43 @@ export default function Home() {
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="container mx-auto px-4 py-8 space-y-10"
+        className="flex-1 flex flex-col overflow-y-auto md:overflow-hidden min-h-0 container mx-auto px-4"
       >
-        <Dashboard questions={questions} />
+        <div className="shrink-0 py-8 space-y-10">
+          <Dashboard questions={questions} />
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3, duration: 0.5 }}
-          className="space-y-5 relative"
-        >
-          <div className="flex items-center gap-3">
-            <h2 className="text-xl font-extrabold tracking-tight text-black dark:text-white">
-              Your Tracked Questions
-            </h2>
-            <span className="inline-flex items-center justify-center h-6 min-w-6 px-2.5 rounded-full bg-black/10 dark:bg-white/10 border border-black/10 dark:border-white/10 text-black dark:text-white text-xs font-black shadow-none">
-              {filteredAndSortedQuestions.length}
-            </span>
-          </div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+            className="space-y-5 relative"
+          >
+            <div className="flex items-center gap-3">
+              <h2 className="text-xl font-extrabold tracking-tight text-black dark:text-white">
+                Your Tracked Questions
+              </h2>
+              <span className="inline-flex items-center justify-center h-6 min-w-6 px-2.5 rounded-full bg-black/10 dark:bg-white/10 border border-black/10 dark:border-white/10 text-black dark:text-white text-xs font-black shadow-none">
+                {filteredAndSortedQuestions.length}
+              </span>
+            </div>
 
-          <SearchFilter
-            search={search}
-            setSearch={setSearch}
-            confidenceFilter={confidenceFilter}
-            setConfidenceFilter={setConfidenceFilter}
-            platformFilter={platformFilter}
-            setPlatformFilter={setPlatformFilter}
-            tagFilter={tagFilter}
-            setTagFilter={setTagFilter}
-            sortBy={sortBy}
-            setSortBy={setSortBy}
-            availableTags={availableTags}
-          />
+            <SearchFilter
+              search={search}
+              setSearch={setSearch}
+              confidenceFilter={confidenceFilter}
+              setConfidenceFilter={setConfidenceFilter}
+              platformFilter={platformFilter}
+              setPlatformFilter={setPlatformFilter}
+              tagFilter={tagFilter}
+              setTagFilter={setTagFilter}
+              sortBy={sortBy}
+              setSortBy={setSortBy}
+              availableTags={availableTags}
+            />
+          </motion.div>
+        </div>
 
+        <div className="flex-1 md:overflow-y-auto min-h-0 pb-8 mt-6 md:pr-2">
           {isLoading ? (
             <div className="py-12 text-center text-muted-foreground text-sm">
               Loading questions...
@@ -214,7 +218,7 @@ export default function Home() {
               onSelectQuestion={setSelectedQuestion}
             />
           )}
-        </motion.div>
+        </div>
       </motion.main>
 
       <QuestionDetailSheet

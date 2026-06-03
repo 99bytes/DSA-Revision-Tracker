@@ -51,11 +51,11 @@ export function QuestionTable({ questions, onMarkRevised, onDelete, onSelectQues
   }
 
   return (
-    <div className="border border-black/10 dark:border-white/10 rounded-[2rem] overflow-hidden bg-transparent shadow-none relative mt-8">
-      <div className="relative z-10 overflow-x-auto pb-4 sm:pb-0">
-        <div className="min-w-[800px]">
+    <div className="border border-black/10 dark:border-white/10 rounded-[2rem] overflow-hidden bg-transparent shadow-none relative">
+      <div className="relative z-10 overflow-x-auto">
+        <div className="min-w-[800px] overflow-y-auto max-h-[560px]">
           <Table>
-            <TableHeader className="bg-transparent">
+            <TableHeader className="bg-background/80 dark:bg-background/80 backdrop-blur-sm sticky top-0 z-20">
               <TableRow className="border-b border-black/5 dark:border-white/5 hover:bg-transparent">
                 <TableHead className="pl-6 font-medium tracking-wide text-xs uppercase text-black/50 dark:text-white/50 h-14">Question</TableHead>
                 <TableHead className="font-medium tracking-wide text-xs uppercase text-black/50 dark:text-white/50 h-14 w-[120px]">Platform</TableHead>

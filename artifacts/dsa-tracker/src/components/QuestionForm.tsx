@@ -60,7 +60,7 @@ export function QuestionForm({ initialData, onSubmit, onCancel, isSubmitting }: 
             lastRevised: parsed.lastRevised ? new Date(parsed.lastRevised) : new Date()
           };
         }
-      } catch (e) {}
+      } catch (e) { }
     }
 
     return {
@@ -101,11 +101,11 @@ export function QuestionForm({ initialData, onSubmit, onCancel, isSubmitting }: 
       tags: tagsArray,
       approach: values.approach,
       timeComplexity: values.timeComplexity,
-      confidence: values.confidence as 1|2|3|4|5,
+      confidence: values.confidence as 1 | 2 | 3 | 4 | 5,
       lastRevised: values.lastRevised.toISOString(),
       mistakeNotes: values.mistakeNotes
     });
-    
+
     if (!initialData) {
       localStorage.removeItem("dsa-tracker-draft");
     }
@@ -282,10 +282,10 @@ export function QuestionForm({ initialData, onSubmit, onCancel, isSubmitting }: 
             <FormItem>
               <FormLabel>Approach</FormLabel>
               <FormControl>
-                <Textarea 
-                  placeholder="Describe your algorithm..." 
+                <Textarea
+                  placeholder="Describe your algorithm..."
                   className="min-h-[100px]"
-                  {...field} 
+                  {...field}
                 />
               </FormControl>
               <FormMessage />
@@ -300,10 +300,10 @@ export function QuestionForm({ initialData, onSubmit, onCancel, isSubmitting }: 
             <FormItem>
               <FormLabel>Mistakes & Edge Cases</FormLabel>
               <FormControl>
-                <Textarea 
-                  placeholder="What did you forget? What edge cases failed?" 
+                <Textarea
+                  placeholder="What did you forget? What edge cases failed?"
                   className="min-h-[100px] border-destructive/50 focus-visible:ring-destructive/50"
-                  {...field} 
+                  {...field}
                 />
               </FormControl>
               <FormMessage />

@@ -26,9 +26,9 @@ export function SearchFilter({
   availableTags
 }: SearchFilterProps) {
   return (
-    <div className="flex flex-col gap-4 p-0 bg-transparent border-0 relative overflow-visible mt-6 mb-8">
+    <div className="flex flex-col gap-4 p-0 bg-transparent border-0 relative overflow-visible mt-3 mb-0">
       <div className="relative z-10">
-        <div className="relative flex items-center mb-5">
+        <div className="relative flex items-center mb-3">
           <Search className="w-5 h-5 text-black/50 dark:text-white/50 absolute left-5" />
           <Input
             placeholder="Search by question name..."

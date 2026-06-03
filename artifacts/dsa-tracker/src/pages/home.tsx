@@ -177,7 +177,7 @@ export default function Home() {
         transition={{ duration: 0.5, ease: "easeOut" }}
         className="flex-1 flex flex-col overflow-y-auto container mx-auto px-4"
       >
-        <div className="shrink-0 py-8 space-y-10">
+        <div className="shrink-0 pt-8 pb-1 space-y-10">
           <Dashboard questions={questions} />
 
           <motion.div
@@ -211,7 +211,7 @@ export default function Home() {
           </motion.div>
         </div>
 
-        <div className="flex-1 min-h-0 pb-8 mt-6">
+        <div className="flex-1 min-h-0 pb-8">
           {isLoading ? (
             <div className="py-12 text-center text-muted-foreground text-sm">
               Loading questions...

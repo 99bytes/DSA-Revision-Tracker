@@ -26,6 +26,7 @@ const platformColors: Record<string, string> = {
   LeetCode: "bg-orange-500/10 text-orange-600 border-orange-200 dark:border-orange-900 dark:text-orange-400",
   GFG: "bg-green-500/10 text-green-700 border-green-200 dark:border-green-900 dark:text-green-400",
   Codeforces: "bg-blue-500/10 text-blue-700 border-blue-200 dark:border-blue-900 dark:text-blue-400",
+  NeetCode: "bg-purple-500/10 text-purple-700 border-purple-200 dark:border-purple-900 dark:text-purple-400",
   Other: "bg-muted text-muted-foreground"
 };
 

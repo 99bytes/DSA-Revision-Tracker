@@ -1,4 +1,4 @@
-export type Platform = "LeetCode" | "GFG" | "Codeforces" | "Other";
+export type Platform = "LeetCode" | "GFG" | "Codeforces" | "NeetCode" | "Other";
 
 export type Question = {
   id: string;
@@ -12,7 +12,7 @@ export type Question = {
   mistakeNotes: string;
 };
 
-export const PLATFORMS: Platform[] = ["LeetCode", "GFG", "Codeforces", "Other"];
+export const PLATFORMS: Platform[] = ["LeetCode", "GFG", "Codeforces", "NeetCode", "Other"];
 
 export const CONFIDENCE_LABELS = {
   1: "Needs Help",

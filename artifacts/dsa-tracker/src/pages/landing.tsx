@@ -4,6 +4,8 @@ import { Link } from "wouter";
 import { ArrowRight, Code2, BrainCircuit, LineChart, Flame, Tags, Clock, BookOpen, MonitorPlay } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
+
 const quotesBank = [
   {
     title: "Patience is O(1)",
@@ -288,9 +290,7 @@ export default function LandingPage() {
       <header className="bg-background/80 dark:bg-background/10 backdrop-blur-2xl fixed top-0 inset-x-0 w-full z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-xl bg-black dark:bg-neutral-200 text-white dark:text-black flex items-center justify-center font-extrabold text-xs tracking-tight shadow-md">
-              DSA
-            </div>
+            <img src={`${basePath}/logo.svg`} alt="Logo" className="w-9 h-9 shrink-0" />
             <span className="text-xl font-extrabold tracking-tight text-black dark:text-white">
               Revision <span className="text-violet-600 dark:text-violet-400 font-bold">Tracker</span>
             </span>

@@ -132,9 +132,7 @@ export default function Home() {
       <header className="shrink-0 bg-background/80 dark:bg-background/10 backdrop-blur-2xl z-50 shadow-sm">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-400 to-violet-700 text-white flex items-center justify-center font-black text-[11px] tracking-tighter shadow-md shrink-0">
-              DSA
-            </div>
+            <img src={`${basePath}/logo.svg`} alt="Logo" className="w-9 h-9 shrink-0" />
             <h1 className="hidden sm:block text-xl font-extrabold tracking-tight text-black dark:text-white truncate">
               Revision{" "}
               <span className="text-violet-600 dark:text-violet-400 font-bold">

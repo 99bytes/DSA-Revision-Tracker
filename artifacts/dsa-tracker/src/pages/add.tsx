@@ -9,6 +9,7 @@ import { QuestionForm } from "@/components/QuestionForm";
 import { ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Question } from "@/lib/types";
+import { motion } from "framer-motion";
 
 export default function AddQuestion() {
   const [, setLocation] = useLocation();
@@ -54,16 +55,16 @@ export default function AddQuestion() {
 
   return (
     <div className="min-h-[100dvh] bg-background">
-      <header className="border-b bg-card/80 backdrop-blur-md sticky top-0 z-50">
+      <header className="border-b border-white/10 dark:border-white/5 bg-background/40 backdrop-blur-2xl sticky top-0 z-50 shadow-sm">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link
               href="/"
-              className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-muted h-10 w-10"
+              className="inline-flex items-center justify-center rounded-full text-sm font-medium transition-all hover:bg-primary/10 hover:text-primary h-10 w-10 hover:-translate-x-1"
             >
-              <ArrowLeft className="w-4 h-4" />
+              <ArrowLeft className="w-5 h-5" />
             </Link>
-            <h1 className="text-xl font-bold tracking-tight">
+            <h1 className="text-xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-br from-foreground to-foreground/70">
               Add New Question
             </h1>
           </div>
@@ -71,15 +72,23 @@ export default function AddQuestion() {
         </div>
       </header>
 
-      <main className="container max-w-3xl mx-auto px-4 py-8">
-        <div className="bg-card border rounded-lg p-6">
-          <QuestionForm
-            onSubmit={handleSubmit}
-            onCancel={() => setLocation("/")}
-            isSubmitting={createMutation.isPending}
-          />
+      <motion.main 
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+        className="container max-w-3xl mx-auto px-4 py-8"
+      >
+        <div className="bg-card/60 backdrop-blur-xl border border-t-white/10 dark:border-t-white/5 rounded-2xl p-6 shadow-xl relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent pointer-events-none" />
+          <div className="relative z-10">
+            <QuestionForm
+              onSubmit={handleSubmit}
+              onCancel={() => setLocation("/")}
+              isSubmitting={createMutation.isPending}
+            />
+          </div>
         </div>
-      </main>
+      </motion.main>
     </div>
   );
 }

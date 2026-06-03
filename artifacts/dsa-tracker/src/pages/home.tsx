@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { Plus, LogOut } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useClerk, useUser } from "@clerk/react";
+import { motion } from "framer-motion";
 import {
   useListQuestions,
   getListQuestionsQueryKey,
@@ -122,15 +123,15 @@ export default function Home() {
 
   return (
     <div className="min-h-[100dvh] bg-background">
-      <header className="border-b bg-card/80 backdrop-blur-md sticky top-0 z-50">
+      <header className="border-b border-black/5 dark:border-white/5 bg-background/80 dark:bg-background/10 backdrop-blur-2xl sticky top-0 z-50 shadow-sm">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-indigo-600 text-white flex items-center justify-center font-extrabold text-xs tracking-tight shadow-lg">
+            <div className="w-9 h-9 rounded-xl bg-black dark:bg-neutral-200 text-white dark:text-black flex items-center justify-center font-extrabold text-xs tracking-tight shadow-md shrink-0">
               DSA
             </div>
-            <h1 className="text-xl font-extrabold tracking-tight">
+            <h1 className="hidden sm:block text-xl font-extrabold tracking-tight text-black dark:text-white truncate">
               Revision{" "}
-              <span className="text-muted-foreground font-semibold">
+              <span className="text-violet-600 dark:text-violet-400 font-bold">
                 Tracker
               </span>
             </h1>
@@ -138,41 +139,51 @@ export default function Home() {
           <div className="flex items-center gap-3">
             <ThemeToggle />
             {user && (
-              <div className="hidden sm:flex items-center gap-2 text-sm text-muted-foreground">
-                <div className="w-7 h-7 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-xs">
+              <div className="hidden sm:flex items-center gap-2 text-sm text-black/70 dark:text-white/70 bg-black/[0.02] dark:bg-white/[0.02] px-3 py-1.5 rounded-full border border-black/5 dark:border-white/5">
+                <div className="w-6 h-6 rounded-full bg-violet-500/20 flex items-center justify-center text-violet-600 dark:text-violet-400 font-bold text-[10px]">
                   {(user.firstName?.[0] ?? user.emailAddresses?.[0]?.emailAddress?.[0] ?? "U").toUpperCase()}
                 </div>
-                <span className="font-medium text-foreground">{user.firstName ?? user.emailAddresses?.[0]?.emailAddress}</span>
+                <span className="font-semibold text-black dark:text-white text-xs">{user.firstName ?? user.emailAddresses?.[0]?.emailAddress}</span>
               </div>
             )}
             <button
               onClick={() => signOut({ redirectUrl: basePath || "/" })}
-              className="inline-flex items-center justify-center rounded-xl text-sm font-medium transition-colors h-9 px-3 border border-border hover:bg-muted text-muted-foreground hover:text-foreground"
+              className="inline-flex items-center justify-center rounded-xl text-sm font-medium transition-colors h-9 w-9 border border-black/10 dark:border-white/10 text-black/70 dark:text-white/70 hover:bg-black/[0.03] dark:hover:bg-white/[0.03] hover:text-black dark:hover:text-white"
               title="Sign out"
             >
               <LogOut className="w-4 h-4" />
             </button>
             <Link
               href="/add"
-              className="inline-flex items-center justify-center rounded-xl text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 shadow-md shadow-primary/25"
+              className="inline-flex items-center justify-center rounded-full text-sm font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 disabled:opacity-50 bg-black hover:bg-black/80 dark:bg-neutral-200 dark:hover:bg-neutral-300 text-white dark:text-black hover:scale-105 h-10 w-10 sm:w-auto p-0 sm:py-2 sm:px-6 shadow-md border-0 shrink-0"
               data-testid="link-add-question"
             >
-              <Plus className="w-4 h-4 mr-2" />
-              Add Question
+              <Plus className="w-5 h-5 sm:w-4 sm:h-4 sm:mr-2" />
+              <span className="hidden sm:inline">Add Question</span>
             </Link>
           </div>
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8 space-y-8">
+      <motion.main
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="container mx-auto px-4 py-8 space-y-10"
+      >
         <Dashboard questions={questions} />
 
-        <div className="space-y-4">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.5 }}
+          className="space-y-5 relative"
+        >
           <div className="flex items-center gap-3">
-            <h2 className="text-xl font-bold tracking-tight">
+            <h2 className="text-xl font-extrabold tracking-tight text-black dark:text-white">
               Your Tracked Questions
             </h2>
-            <span className="inline-flex items-center justify-center h-6 min-w-6 px-2 rounded-full bg-primary/10 text-primary text-xs font-bold">
+            <span className="inline-flex items-center justify-center h-6 min-w-6 px-2.5 rounded-full bg-black/10 dark:bg-white/10 border border-black/10 dark:border-white/10 text-black dark:text-white text-xs font-black shadow-none">
               {filteredAndSortedQuestions.length}
             </span>
           </div>
@@ -203,8 +214,8 @@ export default function Home() {
               onSelectQuestion={setSelectedQuestion}
             />
           )}
-        </div>
-      </main>
+        </motion.div>
+      </motion.main>
 
       <QuestionDetailSheet
         question={selectedQuestion}

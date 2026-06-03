@@ -12,6 +12,7 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import AddQuestion from "@/pages/add";
 import EditQuestion from "@/pages/edit";
+import LandingPage from "@/pages/landing";
 
 const queryClient = new QueryClient();
 
@@ -44,42 +45,34 @@ const clerkAppearance = {
   },
   variables: {
     colorPrimary: "hsl(258 90% 66%)",
-    colorForeground: "hsl(210 40% 98%)",
-    colorMutedForeground: "hsl(215 20% 65%)",
-    colorDanger: "hsl(0 84% 60%)",
-    colorBackground: "hsl(222 47% 11%)",
-    colorInput: "hsl(217 33% 17%)",
-    colorInputForeground: "hsl(210 40% 98%)",
-    colorNeutral: "hsl(217 33% 30%)",
-    fontFamily: "'Plus Jakarta Sans', sans-serif",
-    borderRadius: "0.75rem",
+    fontFamily: "'Nunito', sans-serif",
+    borderRadius: "1rem",
   },
   elements: {
+    badge: "text-[10px] font-bold uppercase tracking-widest bg-violet-500/10 text-violet-600 dark:bg-violet-500/20 dark:text-violet-300 px-2.5 py-0.5 rounded-full border border-violet-500/20 shadow-sm",
     rootBox: "w-full flex justify-center",
-    cardBox: "bg-[hsl(222,47%,11%)] border border-[hsl(217,33%,20%)] rounded-2xl w-[440px] max-w-full overflow-hidden shadow-2xl shadow-black/40",
+    cardBox: "bg-white dark:bg-black border border-black/10 dark:border-white/10 rounded-3xl w-[440px] max-w-full overflow-hidden shadow-2xl shadow-black/10 dark:shadow-white/5",
     card: "!shadow-none !border-0 !bg-transparent !rounded-none",
     footer: "!shadow-none !border-0 !bg-transparent !rounded-none",
-    headerTitle: "text-white font-extrabold",
-    headerSubtitle: "text-[hsl(215,20%,65%)]",
-    socialButtonsBlockButtonText: "text-white",
-    formFieldLabel: "text-[hsl(215,20%,65%)]",
-    footerActionLink: "text-[hsl(258,90%,75%)] hover:text-[hsl(258,90%,85%)]",
-    footerActionText: "text-[hsl(215,20%,65%)]",
-    dividerText: "text-[hsl(215,20%,65%)]",
-    identityPreviewEditButton: "text-[hsl(258,90%,75%)]",
-    formFieldSuccessText: "text-green-400",
-    alertText: "text-white",
-    logoBox: "mb-2",
-    logoImage: "h-10 w-auto",
-    socialButtonsBlockButton: "border-[hsl(217,33%,25%)] hover:bg-[hsl(217,33%,20%)]",
-    formButtonPrimary: "bg-[hsl(258,90%,66%)] hover:bg-[hsl(258,90%,58%)]",
-    formFieldInput: "bg-[hsl(217,33%,17%)] border-[hsl(217,33%,25%)] text-white",
-    footerAction: "bg-transparent",
-    dividerLine: "bg-[hsl(217,33%,25%)]",
-    alert: "bg-[hsl(217,33%,17%)] border-[hsl(217,33%,25%)]",
-    otpCodeFieldInput: "bg-[hsl(217,33%,17%)] border-[hsl(217,33%,25%)] text-white",
-    formFieldRow: "gap-3",
-    main: "gap-4",
+    headerTitle: "text-black dark:text-white font-extrabold text-2xl tracking-tight",
+    headerSubtitle: "text-black/60 dark:text-white/60 text-sm",
+    socialButtonsBlockButtonText: "text-black dark:text-white font-bold",
+    socialButtonsBlockButton: "bg-black/[0.02] dark:bg-white/[0.02] border border-black/10 dark:border-white/10 hover:bg-black/[0.05] dark:hover:bg-white/[0.05] h-11 rounded-xl transition-colors",
+    formFieldLabel: "text-black/70 dark:text-white/70 font-bold",
+    formFieldInput: "bg-transparent border border-black/10 dark:border-white/10 text-black dark:text-white rounded-xl h-11 focus:border-violet-500",
+    formButtonPrimary: "bg-black hover:bg-black/80 dark:bg-neutral-200 dark:hover:bg-neutral-300 text-white dark:text-black font-bold shadow-md h-11 rounded-xl transition-colors",
+    footerActionLink: "text-violet-600 dark:text-violet-400 font-bold hover:text-violet-700 dark:hover:text-violet-300",
+    footerActionText: "text-black/60 dark:text-white/60",
+    dividerText: "text-black/40 dark:text-white/40 font-medium",
+    dividerLine: "bg-black/10 dark:bg-white/10",
+    logoBox: "mb-4",
+    logoImage: "h-12 w-auto filter dark:invert",
+    formFieldRow: "gap-4",
+    main: "gap-6",
+    formFieldSuccessText: "text-green-500 font-medium",
+    alertText: "text-black dark:text-white",
+    alert: "bg-black/[0.02] dark:bg-white/[0.02] border border-black/10 dark:border-white/10 rounded-xl",
+    otpCodeFieldInput: "bg-transparent border border-black/10 dark:border-white/10 text-black dark:text-white rounded-xl h-12 w-12",
   },
 };
 
@@ -146,7 +139,7 @@ function HomeRoute() {
         <Home />
       </Show>
       <Show when="signed-out">
-        <Redirect to="/sign-in" />
+        <LandingPage />
       </Show>
     </>
   );
@@ -198,6 +191,12 @@ function ClerkProviderWithRoutes() {
 function App() {
   return (
     <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} storageKey="dsa-theme">
+      <div className="bg-glow-orbs">
+        <div className="glow-orb glow-orb-1"></div>
+        <div className="glow-orb glow-orb-2"></div>
+        <div className="glow-orb glow-orb-3"></div>
+        <div className="glow-orb glow-orb-4"></div>
+      </div>
       <TooltipProvider>
         <WouterRouter base={basePath}>
           <ClerkProviderWithRoutes />

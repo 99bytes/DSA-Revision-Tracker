@@ -1,7 +1,8 @@
 import { useState, useMemo } from "react";
 import { Link } from "wouter";
-import { Plus } from "lucide-react";
+import { Plus, LogOut } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
+import { useClerk, useUser } from "@clerk/react";
 import {
   useListQuestions,
   getListQuestionsQueryKey,
@@ -17,6 +18,8 @@ import { useToast } from "@/hooks/use-toast";
 import { Question } from "@/lib/types";
 import { calculateNextRevision } from "@/lib/revision";
 
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
+
 export default function Home() {
   const [search, setSearch] = useState("");
   const [confidenceFilter, setConfidenceFilter] = useState("All");
@@ -27,6 +30,8 @@ export default function Home() {
 
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const { signOut } = useClerk();
+  const { user } = useUser();
 
   const { data: apiQuestions = [], isLoading } = useListQuestions();
 
@@ -130,8 +135,23 @@ export default function Home() {
               </span>
             </h1>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <ThemeToggle />
+            {user && (
+              <div className="hidden sm:flex items-center gap-2 text-sm text-muted-foreground">
+                <div className="w-7 h-7 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-xs">
+                  {(user.firstName?.[0] ?? user.emailAddresses?.[0]?.emailAddress?.[0] ?? "U").toUpperCase()}
+                </div>
+                <span className="font-medium text-foreground">{user.firstName ?? user.emailAddresses?.[0]?.emailAddress}</span>
+              </div>
+            )}
+            <button
+              onClick={() => signOut({ redirectUrl: basePath || "/" })}
+              className="inline-flex items-center justify-center rounded-xl text-sm font-medium transition-colors h-9 px-3 border border-border hover:bg-muted text-muted-foreground hover:text-foreground"
+              title="Sign out"
+            >
+              <LogOut className="w-4 h-4" />
+            </button>
             <Link
               href="/add"
               className="inline-flex items-center justify-center rounded-xl text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 shadow-md shadow-primary/25"

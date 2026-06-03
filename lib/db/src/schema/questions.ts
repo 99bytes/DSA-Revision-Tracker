@@ -4,6 +4,7 @@ import { z } from "zod/v4";
 
 export const questionsTable = pgTable("questions", {
   id: uuid("id").primaryKey().defaultRandom(),
+  userId: text("user_id").notNull(),
   name: text("name").notNull(),
   platform: text("platform").notNull(),
   tags: text("tags").array().notNull().default([]),
@@ -18,6 +19,7 @@ export const questionsTable = pgTable("questions", {
 export const insertQuestionSchema = createInsertSchema(questionsTable).omit({
   id: true,
   createdAt: true,
+  userId: true,
 });
 
 export type InsertQuestion = z.infer<typeof insertQuestionSchema>;

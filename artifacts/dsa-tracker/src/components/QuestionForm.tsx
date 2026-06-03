@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 
 const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
-  platform: z.enum(["LeetCode", "GFG", "Codeforces", "Other"]),
+  platform: z.enum(["LeetCode", "GFG", "Codeforces", "NeetCode", "Other"]),
   tags: z.string(),
   approach: z.string(),
   timeComplexity: z.string().min(1, "Time complexity is required"),

@@ -95,9 +95,16 @@ export function QuestionTable({ questions, onMarkRevised, onDelete, onSelectQues
                     )}
                   </TableCell>
                   <TableCell>
-                    <Badge variant="outline" className={`${platformColors[q.platform] || platformColors.Other}`}>
-                      {q.platform}
-                    </Badge>
+                    {q.platform === "NeetCode" ? (
+                      <div className="flex items-center gap-1.5">
+                        <CheckCircle2 className="h-4 w-4 text-purple-500" />
+                        <span className="text-sm text-purple-500 font-medium">NeetCode</span>
+                      </div>
+                    ) : (
+                      <Badge variant="outline" className={`${platformColors[q.platform] || platformColors.Other}`}>
+                        {q.platform}
+                      </Badge>
+                    )}
                   </TableCell>
                   <TableCell>
                     <div className="flex flex-wrap gap-1">

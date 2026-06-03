@@ -113,41 +113,6 @@ export default function LandingPage() {
           </Link>
         </div>
 
-        {/* Floating App Preview */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
-          className="w-full max-w-5xl mx-auto mb-32 relative hidden md:block"
-        >
-          {/* Bottom fade to blend with background */}
-          <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-background to-transparent z-10 pointer-events-none" />
-          
-          <motion.div
-            animate={{ y: [0, -10, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            className="rounded-t-[2rem] border border-black/10 dark:border-white/10 bg-white/40 dark:bg-black/40 backdrop-blur-3xl shadow-[0_0_100px_-20px_rgba(139,92,246,0.3)] overflow-hidden aspect-[16/9] flex flex-col relative"
-          >
-             {/* App Window Header */}
-             <div className="h-14 border-b border-black/5 dark:border-white/5 flex items-center px-6 gap-2 bg-white/20 dark:bg-black/20">
-               <div className="w-3.5 h-3.5 rounded-full bg-black/20 dark:bg-white/20" />
-               <div className="w-3.5 h-3.5 rounded-full bg-black/20 dark:bg-white/20" />
-               <div className="w-3.5 h-3.5 rounded-full bg-black/20 dark:bg-white/20" />
-             </div>
-             {/* App Content Skeleton */}
-             <div className="flex-1 p-8 flex gap-6 opacity-60">
-               <div className="w-1/3 space-y-6">
-                 <div className="h-32 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5" />
-                 <div className="h-64 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5" />
-               </div>
-               <div className="flex-1 space-y-6">
-                 <div className="h-14 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5" />
-                 <div className="h-full rounded-2xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5" />
-               </div>
-             </div>
-          </motion.div>
-        </motion.div>
-
         {/* Minimal Features Row */}
         <motion.div 
           initial="hidden"

@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: questions
+    description: DSA question operations
 paths:
   /healthz:
     get:
@@ -24,6 +26,81 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /questions:
+    get:
+      operationId: listQuestions
+      tags: [questions]
+      summary: List all questions
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Question"
+    post:
+      operationId: createQuestion
+      tags: [questions]
+      summary: Create a question
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QuestionInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Question"
+
+  /questions/{id}:
+    patch:
+      operationId: updateQuestion
+      tags: [questions]
+      summary: Update a question
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QuestionUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Question"
+        "404":
+          description: Not found
+    delete:
+      operationId: deleteQuestion
+      tags: [questions]
+      summary: Delete a question
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Deleted
+        "404":
+          description: Not found
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +111,91 @@ components:
       required:
         - status
 
+    Question:
+      type: object
+      required:
+        - id
+        - name
+        - platform
+        - tags
+        - approach
+        - timeComplexity
+        - confidence
+        - lastRevised
+        - mistakeNotes
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        platform:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        approach:
+          type: string
+        timeComplexity:
+          type: string
+        confidence:
+          type: integer
+        lastRevised:
+          type: string
+        mistakeNotes:
+          type: string
+
+    QuestionInput:
+      type: object
+      required:
+        - name
+        - platform
+        - confidence
+        - lastRevised
+      properties:
+        name:
+          type: string
+          minLength: 1
+        platform:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        approach:
+          type: string
+        timeComplexity:
+          type: string
+        confidence:
+          type: integer
+          minimum: 1
+          maximum: 5
+        lastRevised:
+          type: string
+        mistakeNotes:
+          type: string
+
+    QuestionUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+        platform:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        approach:
+          type: string
+        timeComplexity:
+          type: string
+        confidence:
+          type: integer
+          minimum: 1
+          maximum: 5
+        lastRevised:
+          type: string
+        mistakeNotes:
+          type: string

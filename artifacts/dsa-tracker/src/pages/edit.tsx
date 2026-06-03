@@ -1,50 +1,89 @@
 import { Link, useLocation, useParams } from "wouter";
+import { useQueryClient } from "@tanstack/react-query";
+import {
+  useListQuestions,
+  useUpdateQuestion,
+  getListQuestionsQueryKey,
+} from "@workspace/api-client-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { QuestionForm } from "@/components/QuestionForm";
 import { ArrowLeft } from "lucide-react";
-import { getQuestions, updateQuestion } from "@/lib/storage";
 import { useToast } from "@/hooks/use-toast";
 import { Question } from "@/lib/types";
-import { useEffect, useState } from "react";
 
 export default function EditQuestion() {
   const params = useParams();
   const [, setLocation] = useLocation();
   const { toast } = useToast();
-  const [question, setQuestion] = useState<Question | null>(null);
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    if (!params.id) return;
-    const q = getQuestions().find(q => q.id === params.id);
-    if (q) {
-      setQuestion(q);
-    } else {
-      setLocation("/");
-    }
-  }, [params.id, setLocation]);
+  const { data: apiQuestions = [], isLoading } = useListQuestions();
+  const question = (apiQuestions as Question[]).find(
+    (q) => q.id === params.id,
+  );
+
+  const updateMutation = useUpdateQuestion();
 
   const handleSubmit = (data: Omit<Question, "id">) => {
     if (!question) return;
-    const updated: Question = {
-      ...data,
-      id: question.id
-    };
-    updateQuestion(updated);
-    toast({
-      title: "Question updated",
-      description: "Changes saved successfully."
-    });
-    setLocation("/");
+    updateMutation.mutate(
+      {
+        id: question.id,
+        data: {
+          name: data.name,
+          platform: data.platform,
+          tags: data.tags,
+          approach: data.approach,
+          timeComplexity: data.timeComplexity,
+          confidence: data.confidence,
+          lastRevised: data.lastRevised,
+          mistakeNotes: data.mistakeNotes,
+        },
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: getListQuestionsQueryKey(),
+          });
+          toast({
+            title: "Question updated",
+            description: "Changes saved successfully.",
+          });
+          setLocation("/");
+        },
+        onError: () => {
+          toast({
+            title: "Failed to save",
+            description: "Something went wrong. Please try again.",
+            variant: "destructive",
+          });
+        },
+      },
+    );
   };
 
-  if (!question) return null; // loading
+  if (isLoading) {
+    return (
+      <div className="min-h-[100dvh] bg-background flex items-center justify-center text-muted-foreground">
+        Loading...
+      </div>
+    );
+  }
+
+  if (!question) {
+    setLocation("/");
+    return null;
+  }
 
   return (
     <div className="min-h-[100dvh] bg-background">
-      <header className="border-b bg-card">
+      <header className="border-b bg-card/80 backdrop-blur-md sticky top-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <Link href="/" className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-muted h-10 w-10">
+            <Link
+              href="/"
+              className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-muted h-10 w-10"
+            >
               <ArrowLeft className="w-4 h-4" />
             </Link>
             <h1 className="text-xl font-bold tracking-tight">Edit Question</h1>
@@ -55,10 +94,11 @@ export default function EditQuestion() {
 
       <main className="container max-w-3xl mx-auto px-4 py-8">
         <div className="bg-card border rounded-lg p-6">
-          <QuestionForm 
+          <QuestionForm
             initialData={question}
             onSubmit={handleSubmit}
             onCancel={() => setLocation("/")}
+            isSubmitting={updateMutation.isPending}
           />
         </div>
       </main>

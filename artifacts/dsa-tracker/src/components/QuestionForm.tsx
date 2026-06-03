@@ -30,9 +30,10 @@ interface QuestionFormProps {
   initialData?: Question;
   onSubmit: (data: Omit<Question, "id">) => void;
   onCancel: () => void;
+  isSubmitting?: boolean;
 }
 
-export function QuestionForm({ initialData, onSubmit, onCancel }: QuestionFormProps) {
+export function QuestionForm({ initialData, onSubmit, onCancel, isSubmitting }: QuestionFormProps) {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -239,8 +240,8 @@ export function QuestionForm({ initialData, onSubmit, onCancel }: QuestionFormPr
           <Button type="button" variant="ghost" onClick={onCancel}>
             Cancel
           </Button>
-          <Button type="submit">
-            {initialData ? "Save Changes" : "Add Question"}
+          <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Saving..." : initialData ? "Save Changes" : "Add Question"}
           </Button>
         </div>
       </form>

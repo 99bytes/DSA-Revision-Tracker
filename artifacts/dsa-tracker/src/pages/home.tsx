@@ -129,7 +129,7 @@ export default function Home() {
         <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-cyan-600/10 dark:bg-cyan-500/10 blur-[120px]" />
       </div>
 
-      <header className="shrink-0 border-b border-black/5 dark:border-white/5 bg-background/80 dark:bg-background/10 backdrop-blur-2xl z-50 shadow-sm">
+      <header className="shrink-0 bg-background/80 dark:bg-background/10 backdrop-blur-2xl z-50 shadow-sm">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-400 to-violet-700 text-white flex items-center justify-center font-black text-[11px] tracking-tighter shadow-md shrink-0">

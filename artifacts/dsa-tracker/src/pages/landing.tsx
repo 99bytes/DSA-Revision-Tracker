@@ -285,7 +285,7 @@ export default function LandingPage() {
       </div>
 
       {/* Header */}
-      <header className="border-b border-black/5 dark:border-white/5 bg-background/80 dark:bg-background/10 backdrop-blur-2xl fixed top-0 inset-x-0 w-full z-50">
+      <header className="bg-background/80 dark:bg-background/10 backdrop-blur-2xl fixed top-0 inset-x-0 w-full z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-9 h-9 rounded-xl bg-black dark:bg-neutral-200 text-white dark:text-black flex items-center justify-center font-extrabold text-xs tracking-tight shadow-md">
@@ -348,7 +348,7 @@ export default function LandingPage() {
 
       {/* PAGE 2: Floating Water Cards */}
       <section 
-        className="relative w-full h-[100vh] overflow-hidden hidden md:block border-t border-black/5 dark:border-white/5"
+        className="relative w-full h-[100vh] overflow-hidden hidden md:block"
         onPointerMove={handlePointerMove}
         onPointerLeave={handlePointerLeave}
       >
@@ -367,7 +367,7 @@ export default function LandingPage() {
       </section>
 
       {/* Mobile Fallback for Page 2 */}
-      <section className="w-full flex flex-col md:hidden px-4 py-20 space-y-4 border-t border-black/5 dark:border-white/5 relative z-10">
+      <section className="w-full flex flex-col md:hidden px-4 py-20 space-y-4 relative z-10">
         <h2 className="text-3xl font-bold text-center mb-8">Words of Wisdom</h2>
         {quotesBank.slice(0, 5).map((feature, i) => (
           <div key={i} className="p-6 rounded-[2rem] border border-black/10 dark:border-white/10 bg-white/70 dark:bg-black/70 backdrop-blur-xl shadow-xl w-full">

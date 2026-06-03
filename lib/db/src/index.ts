@@ -12,7 +12,7 @@ if (!connectionString) {
   );
 }
 
-const isSupabase = connectionString.includes("supabase.com");
+const isSupabase = connectionString.includes("supabase");
 
 export const pool = new Pool({
   connectionString,

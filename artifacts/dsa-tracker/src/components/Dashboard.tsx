@@ -45,7 +45,13 @@ export function Dashboard({ questions }: { questions: Question[] }) {
       initial="hidden"
       animate="show"
     >
-      <motion.div variants={item}>
+      <motion.div variants={item} className="h-full">
+        <motion.div
+          animate={{ y: [0, -6, 0] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0 }}
+          whileHover={{ scale: 1.02, y: -8 }}
+          className="h-full"
+        >
         <Card className="border border-black/10 dark:border-white/10 bg-transparent rounded-[2rem] relative overflow-hidden shadow-none hover:bg-black/[0.03] dark:hover:bg-white/[0.03] transition-colors h-full flex flex-col">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10 px-6 pt-6">
             <CardTitle className="text-sm font-medium tracking-wide text-black/70 dark:text-white/70 uppercase">Total Solved</CardTitle>
@@ -68,9 +74,16 @@ export function Dashboard({ questions }: { questions: Question[] }) {
             </div>
           </CardContent>
         </Card>
+        </motion.div>
       </motion.div>
 
-      <motion.div variants={item}>
+      <motion.div variants={item} className="h-full">
+        <motion.div
+          animate={{ y: [0, -6, 0] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
+          whileHover={{ scale: 1.02, y: -8 }}
+          className="h-full"
+        >
         <Card className="border border-black/10 dark:border-white/10 bg-transparent rounded-[2rem] relative overflow-hidden shadow-none hover:bg-black/[0.03] dark:hover:bg-white/[0.03] transition-colors h-full flex flex-col">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10 px-6 pt-6">
             <CardTitle className="text-sm font-medium tracking-wide text-black/70 dark:text-white/70 uppercase">Weak Links</CardTitle>
@@ -93,9 +106,16 @@ export function Dashboard({ questions }: { questions: Question[] }) {
             </div>
           </CardContent>
         </Card>
+        </motion.div>
       </motion.div>
 
-      <motion.div variants={item}>
+      <motion.div variants={item} className="h-full">
+        <motion.div
+          animate={{ y: [0, -6, 0] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 2.4 }}
+          whileHover={{ scale: 1.02, y: -8 }}
+          className="h-full"
+        >
         <Card className="border border-black/10 dark:border-white/10 bg-transparent rounded-[2rem] relative overflow-hidden shadow-none hover:bg-black/[0.03] dark:hover:bg-white/[0.03] transition-colors h-full flex flex-col">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10 px-6 pt-6">
             <CardTitle className="text-sm font-medium tracking-wide text-black/70 dark:text-white/70 uppercase">Mastered</CardTitle>
@@ -118,9 +138,16 @@ export function Dashboard({ questions }: { questions: Question[] }) {
             </div>
           </CardContent>
         </Card>
+        </motion.div>
       </motion.div>
 
-      <motion.div variants={item}>
+      <motion.div variants={item} className="h-full">
+        <motion.div
+          animate={{ y: [0, -6, 0] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 3.6 }}
+          whileHover={{ scale: 1.02, y: -8 }}
+          className="h-full"
+        >
         <Card className="border border-black/10 dark:border-white/10 bg-transparent rounded-[2rem] relative overflow-hidden shadow-none hover:bg-black/[0.03] dark:hover:bg-white/[0.03] transition-colors h-full flex flex-col">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10 px-6 pt-6">
             <CardTitle className="text-sm font-medium tracking-wide text-black/70 dark:text-white/70 uppercase">Focus Area</CardTitle>
@@ -143,6 +170,7 @@ export function Dashboard({ questions }: { questions: Question[] }) {
             </div>
           </CardContent>
         </Card>
+        </motion.div>
       </motion.div>
     </motion.div>
   );

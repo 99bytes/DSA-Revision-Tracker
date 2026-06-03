@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { useEffect } from "react";
 import { Question, PLATFORMS, CONFIDENCE_LABELS } from "@/lib/types";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -9,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, RotateCcw } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 
@@ -34,19 +35,59 @@ interface QuestionFormProps {
 }
 
 export function QuestionForm({ initialData, onSubmit, onCancel, isSubmitting }: QuestionFormProps) {
+  // Compute defaults as a plain object (react-hook-form doesn't support sync functions for defaultValues)
+  const getDefaults = (): Partial<FormValues> => {
+    if (initialData) {
+      return {
+        name: initialData.name,
+        platform: initialData.platform,
+        tags: initialData.tags.join(", "),
+        approach: initialData.approach,
+        timeComplexity: initialData.timeComplexity,
+        confidence: initialData.confidence,
+        lastRevised: new Date(initialData.lastRevised),
+        mistakeNotes: initialData.mistakeNotes
+      };
+    }
+
+    const saved = localStorage.getItem("dsa-tracker-draft");
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (parsed) {
+          return {
+            ...parsed,
+            lastRevised: parsed.lastRevised ? new Date(parsed.lastRevised) : new Date()
+          };
+        }
+      } catch (e) {}
+    }
+
+    return {
+      name: "",
+      platform: "LeetCode",
+      tags: "",
+      approach: "",
+      timeComplexity: "O(n)",
+      confidence: 3,
+      lastRevised: new Date(),
+      mistakeNotes: ""
+    };
+  };
+
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: initialData?.name || "",
-      platform: initialData?.platform || "LeetCode",
-      tags: initialData?.tags?.join(", ") || "",
-      approach: initialData?.approach || "",
-      timeComplexity: initialData?.timeComplexity || "O(n)",
-      confidence: initialData?.confidence || 3,
-      lastRevised: initialData ? new Date(initialData.lastRevised) : new Date(),
-      mistakeNotes: initialData?.mistakeNotes || ""
-    }
+    defaultValues: getDefaults()
   });
+
+  // Auto-save draft on any change (add-mode only)
+  useEffect(() => {
+    if (initialData) return;
+    const { unsubscribe } = form.watch((value) => {
+      localStorage.setItem("dsa-tracker-draft", JSON.stringify(value));
+    });
+    return unsubscribe;
+  }, [form, initialData]);
 
   const handleSubmit = (values: FormValues) => {
     const tagsArray = values.tags
@@ -64,11 +105,45 @@ export function QuestionForm({ initialData, onSubmit, onCancel, isSubmitting }: 
       lastRevised: values.lastRevised.toISOString(),
       mistakeNotes: values.mistakeNotes
     });
+    
+    if (!initialData) {
+      localStorage.removeItem("dsa-tracker-draft");
+    }
+  };
+
+  const handleReset = () => {
+    if (window.confirm("Are you sure you want to reset the form? All unsaved data will be lost.")) {
+      form.reset({
+        name: "",
+        platform: "LeetCode",
+        tags: "",
+        approach: "",
+        timeComplexity: "O(n)",
+        confidence: 3,
+        lastRevised: new Date(),
+        mistakeNotes: ""
+      });
+      if (!initialData) {
+        localStorage.removeItem("dsa-tracker-draft");
+      }
+    }
   };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6 relative pt-2">
+        {!initialData && (
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            onClick={handleReset}
+            title="Reset Form"
+            className="absolute -top-6 -right-6 text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 h-10 w-10 rounded-bl-xl rounded-tr-xl rounded-tl-none rounded-br-none z-20"
+          >
+            <RotateCcw className="h-4 w-4" />
+          </Button>
+        )}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <FormField
             control={form.control}
@@ -141,7 +216,7 @@ export function QuestionForm({ initialData, onSubmit, onCancel, isSubmitting }: 
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Confidence Level</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value.toString()}>
+                <Select onValueChange={field.onChange} defaultValue={field.value?.toString()}>
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Select confidence" />

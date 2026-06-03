@@ -54,8 +54,14 @@ export default function AddQuestion() {
   };
 
   return (
-    <div className="min-h-[100dvh] bg-background">
-      <header className="border-b border-white/10 dark:border-white/5 bg-background/40 backdrop-blur-2xl sticky top-0 z-50 shadow-sm">
+    <div className="min-h-[100dvh] bg-background relative z-0 flex flex-col cursor-pointer" onClick={() => setLocation("/")}>
+      {/* Ambient Background Orbs */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
+        <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-violet-600/10 dark:bg-violet-500/10 blur-[120px]" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-cyan-600/10 dark:bg-cyan-500/10 blur-[120px]" />
+      </div>
+
+      <header className="border-b border-white/10 dark:border-white/5 bg-background/40 backdrop-blur-2xl sticky top-0 z-50 shadow-sm cursor-default" onClick={(e) => e.stopPropagation()}>
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link
@@ -76,9 +82,9 @@ export default function AddQuestion() {
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, ease: "easeOut" }}
-        className="container max-w-3xl mx-auto px-4 py-8"
+        className="container max-w-3xl mx-auto px-4 py-8 flex-1 flex flex-col"
       >
-        <div className="bg-card/60 backdrop-blur-xl border border-t-white/10 dark:border-t-white/5 rounded-2xl p-6 shadow-xl relative overflow-hidden">
+        <div className="bg-card/60 backdrop-blur-xl border border-t-white/10 dark:border-t-white/5 rounded-2xl p-6 shadow-xl relative overflow-hidden cursor-default" onClick={(e) => e.stopPropagation()}>
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent pointer-events-none" />
           <div className="relative z-10">
             <QuestionForm

@@ -72,8 +72,14 @@ export default function EditQuestion() {
   }
 
   return (
-    <div className="min-h-[100dvh] bg-background">
-      <header className="border-b border-white/10 dark:border-white/5 bg-background/40 backdrop-blur-2xl sticky top-0 z-50 shadow-sm">
+    <div className="min-h-[100dvh] bg-background relative z-0">
+      {/* Ambient Background Orbs */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
+        <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-violet-600/10 dark:bg-violet-500/10 blur-[120px]" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-cyan-600/10 dark:bg-cyan-500/10 blur-[120px]" />
+      </div>
+
+      <header className="border-b border-black/5 dark:border-white/5 bg-background/80 dark:bg-background/10 backdrop-blur-2xl sticky top-0 z-50 shadow-sm">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link

@@ -122,7 +122,13 @@ export default function Home() {
   };
 
   return (
-    <div className="h-[100dvh] flex flex-col bg-background overflow-hidden">
+    <div className="h-[100dvh] flex flex-col bg-background overflow-hidden relative z-0">
+      {/* Ambient Background Orbs */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
+        <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-violet-600/10 dark:bg-violet-500/10 blur-[120px]" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-cyan-600/10 dark:bg-cyan-500/10 blur-[120px]" />
+      </div>
+
       <header className="shrink-0 border-b border-black/5 dark:border-white/5 bg-background/80 dark:bg-background/10 backdrop-blur-2xl z-50 shadow-sm">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -169,7 +175,7 @@ export default function Home() {
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="flex-1 flex flex-col overflow-y-auto md:overflow-hidden min-h-0 container mx-auto px-4"
+        className="flex-1 flex flex-col overflow-y-auto container mx-auto px-4"
       >
         <div className="shrink-0 py-8 space-y-10">
           <Dashboard questions={questions} />
@@ -205,7 +211,7 @@ export default function Home() {
           </motion.div>
         </div>
 
-        <div className="flex-1 md:overflow-y-auto min-h-0 pb-8 mt-6 md:pr-2">
+        <div className="flex-1 min-h-0 pb-8 mt-6">
           {isLoading ? (
             <div className="py-12 text-center text-muted-foreground text-sm">
               Loading questions...

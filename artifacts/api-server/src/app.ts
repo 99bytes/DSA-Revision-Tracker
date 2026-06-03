@@ -50,4 +50,9 @@ app.use(
 
 app.use("/api", router);
 
+app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+  console.error("FATAL ERROR CAUSE:", err.cause);
+  res.status(500).json({ error: "Internal Server Error", details: err.cause?.message || err.message });
+});
+
 export default app;

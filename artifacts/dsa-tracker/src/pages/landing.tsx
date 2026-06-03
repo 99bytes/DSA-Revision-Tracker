@@ -35,7 +35,7 @@ export default function LandingPage() {
       </header>
 
       {/* Hero Section */}
-      <main className="flex-1 flex flex-col items-center justify-center px-4 text-center">
+      <main className="flex-1 flex flex-col items-center pt-24 md:pt-32 pb-12 px-4 text-center">
         <div className="inline-flex items-center justify-center rounded-full px-3 py-1 mb-8 border border-violet-500/20 bg-violet-500/10 text-violet-600 dark:text-violet-400 text-xs font-semibold tracking-wide uppercase">
           Build Muscle Memory
         </div>

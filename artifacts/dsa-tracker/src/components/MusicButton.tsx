@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Music, VolumeX } from "lucide-react";
 import { useTheme } from "next-themes";
+import { toast } from "sonner";
 
 const getInitialPlaying = () => {
   if (typeof window !== 'undefined') {
@@ -46,6 +47,10 @@ export function playHpTheme(baseUrl: string) {
   globalAudio?.play().catch((err) => {
     if (err.name === 'NotAllowedError') {
       waitingForInteraction = true;
+      toast("Audio paused by browser", {
+        description: "Click anywhere to resume the Harry Potter theme.",
+        duration: 4000,
+      });
     } else {
       console.error("Audio playback failed:", err);
       globalIsPlaying = false;

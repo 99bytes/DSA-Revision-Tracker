@@ -15,12 +15,30 @@ export function initAudio(baseUrl: string) {
   }
 }
 
+let waitingForInteraction = false;
+
+const handleFirstInteraction = () => {
+  if (waitingForInteraction) {
+    waitingForInteraction = false;
+    playHpTheme(import.meta.env.BASE_URL);
+  }
+};
+
+if (typeof document !== 'undefined') {
+  document.addEventListener('click', handleFirstInteraction);
+  document.addEventListener('keydown', handleFirstInteraction);
+}
+
 export function playHpTheme(baseUrl: string) {
   initAudio(baseUrl);
   globalIsPlaying = true;
   listeners.forEach(l => l(true));
   globalAudio?.play().catch((err) => {
-    console.error("Audio playback failed:", err);
+    if (err.name === 'NotAllowedError') {
+      waitingForInteraction = true;
+    } else {
+      console.error("Audio playback failed:", err);
+    }
     globalIsPlaying = false;
     listeners.forEach(l => l(false));
   });

@@ -192,7 +192,7 @@ function App() {
   return (
     <ThemeProvider 
       attribute="class" 
-      defaultTheme="dark" 
+      defaultTheme="cyberpunk" 
       enableSystem={true} 
       storageKey="dsa-theme"
       value={{

@@ -1,7 +1,7 @@
 import { Router, type IRouter, type Request, type Response, type NextFunction } from "express";
 import { eq, and } from "drizzle-orm";
 import { getAuth } from "@clerk/express";
-import { db, questionsTable } from "@workspace/db";
+import { db, questionsTable, userSettingsTable } from "@workspace/db";
 import type { DbQuestion } from "@workspace/db";
 import {
   ListQuestionsResponse,
@@ -43,6 +43,70 @@ function toApiQuestion(q: DbQuestion) {
 
 router.get("/questions", requireAuth, async (req, res): Promise<void> => {
   const userId = (req as Request & { userId: string }).userId;
+
+  try {
+    const [setting] = await db
+      .select()
+      .from(userSettingsTable)
+      .where(eq(userSettingsTable.userId, userId));
+
+    if (!setting?.hasSeededDummyData) {
+      const now = new Date();
+      const dummyQuestions = [
+        {
+          userId,
+          name: "Two Sum",
+          platform: "LeetCode",
+          tags: ["Array", "Hash Table"],
+          approach: "Use a hash map to store the complement of each element as we iterate. O(n) time complexity.",
+          timeComplexity: "O(n)",
+          confidence: 4,
+          lastRevised: now,
+          mistakeNotes: "Watch out for using the same element twice.",
+        },
+        {
+          userId,
+          name: "Reverse Linked List",
+          platform: "LeetCode",
+          tags: ["Linked List"],
+          approach: "Keep track of prev, curr, and next nodes. Iteratively reverse the pointers.",
+          timeComplexity: "O(n)",
+          confidence: 5,
+          lastRevised: now,
+          mistakeNotes: "Always remember to save the next node before overwriting curr.next.",
+        },
+        {
+          userId,
+          name: "Merge Intervals",
+          platform: "LeetCode",
+          tags: ["Array", "Sorting"],
+          approach: "Sort intervals by start time. Iterate and merge if the current start is <= previous end.",
+          timeComplexity: "O(n log n)",
+          confidence: 3,
+          lastRevised: now,
+          mistakeNotes: "Make sure to update the end time to the max of both overlapping intervals.",
+        },
+        {
+          userId,
+          name: "LRU Cache",
+          platform: "LeetCode",
+          tags: ["Hash Table", "Doubly-Linked List", "Design"],
+          approach: "Combine a hash map with a doubly linked list to achieve O(1) for both get and put operations.",
+          timeComplexity: "O(1)",
+          confidence: 2,
+          lastRevised: now,
+          mistakeNotes: "Updating pointers in the doubly linked list is error-prone. Extract into addNode/removeNode helpers.",
+        }
+      ];
+
+      await db.insert(questionsTable).values(dummyQuestions);
+      await db.insert(userSettingsTable).values({ userId, hasSeededDummyData: true })
+        .onConflictDoUpdate({ target: userSettingsTable.userId, set: { hasSeededDummyData: true } });
+    }
+  } catch (error) {
+    req.log.error({ error }, "Failed to seed dummy data");
+  }
+
   const rows = await db
     .select()
     .from(questionsTable)

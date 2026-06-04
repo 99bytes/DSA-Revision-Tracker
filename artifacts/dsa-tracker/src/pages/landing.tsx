@@ -280,7 +280,7 @@ export default function LandingPage() {
       </div>
 
       {/* Header */}
-      <header className="border-b border-black/10 dark:border-white/10 bg-white/60 dark:bg-black/20 backdrop-blur-md fixed top-0 inset-x-0 w-full z-50 shadow-sm dark:shadow-none">
+      <header className="border-b border-transparent dark:border-transparent bg-transparent backdrop-blur-sm fixed top-0 inset-x-0 w-full z-50 transition-all duration-300 hover:bg-white/10 dark:hover:bg-black/10">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <AlienIcon className="w-9 h-9 shrink-0 text-primary drop-shadow-[0_0_8px_rgba(var(--primary),0.5)]" />

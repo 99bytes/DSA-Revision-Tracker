@@ -256,7 +256,7 @@ export function NextRevisionCountdown({ questions, stats }: { questions: Questio
               onClick={handleMarkRevised}
               disabled={updateMutation.isPending}
               size="sm"
-              className="mt-2 w-full max-w-[200px] rounded-full bg-transparent border border-black/20 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/5 text-black dark:text-white font-semibold text-xs transition-transform active:scale-95"
+              className="mt-2 w-full max-w-[200px] rounded-full magical-btn hover:bg-black/5 dark:hover:bg-white/5 text-black dark:text-white font-semibold text-xs transition-transform active:scale-95"
             >
               <CheckCircle2 className="w-4 h-4 mr-1.5" />
               {updateMutation.isPending ? "Marking..." : "Mark as Revised"}
@@ -265,8 +265,8 @@ export function NextRevisionCountdown({ questions, stats }: { questions: Questio
         </div>
 
         <div className="mt-6 pt-4 border-t border-black/10 dark:border-white/10 flex flex-col sm:flex-row justify-between items-center sm:items-end w-full gap-4 sm:gap-0">
-          <div className="flex items-center text-[11px] text-black/40 dark:text-white/40 font-medium w-full sm:w-auto justify-center sm:justify-start">
-            <Calendar className="w-3.5 h-3.5 mr-2 opacity-70" />
+          <div className="flex items-center text-[12px] text-black/80 dark:text-white/90 font-bold w-full sm:w-auto justify-center sm:justify-start drop-shadow-md">
+            <Calendar className="w-3.5 h-3.5 mr-2" />
             Due on {nextRevDate.toLocaleDateString("en-US", { day: "numeric", month: "short", year: "numeric" })}
             <span className="mx-2">•</span>
             {nextRevDate.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })}

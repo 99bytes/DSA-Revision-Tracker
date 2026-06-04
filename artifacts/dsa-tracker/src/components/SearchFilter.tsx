@@ -26,7 +26,7 @@ export function SearchFilter({
   availableTags
 }: SearchFilterProps) {
   return (
-    <div className="flex flex-col gap-4 p-0 bg-transparent border-0 relative overflow-visible mt-3 mb-0">
+    <div className="flex flex-col gap-4 p-0 bg-transparent border-0 relative overflow-visible mt-3 mb-0 no-hp-shadow">
       <div className="relative z-10">
         <div className="relative flex items-center mb-3">
           <Search className="w-5 h-5 text-black/50 dark:text-white/50 absolute left-5" />
@@ -34,7 +34,7 @@ export function SearchFilter({
             placeholder="Search by question name..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="flex-1 border border-black/10 dark:border-white/10 bg-white/60 dark:bg-transparent backdrop-blur-none shadow-none rounded-full h-14 pl-14 focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-primary dark:focus-visible:border-primary text-base text-black dark:text-white transition-all hover:bg-white hover:dark:bg-black/20 hover:backdrop-blur-sm hover:dark:shadow-md hover:dark:border-t-white/20 placeholder:text-black/50 dark:placeholder:text-white/50"
+            className="flex-1 border border-black/10 dark:border-white/10 bg-white/80 dark:bg-black/40 backdrop-blur-md shadow-sm dark:shadow-md rounded-full h-14 pl-14 focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-primary dark:focus-visible:border-primary text-base text-black dark:text-white transition-all hover:dark:border-t-white/20 placeholder:text-black/50 dark:placeholder:text-white/50"
             data-testid="input-search"
           />
         </div>
@@ -43,7 +43,7 @@ export function SearchFilter({
             <SelectTrigger className="border-black/10 dark:border-white/10 bg-white/60 dark:bg-transparent backdrop-blur-none shadow-none rounded-full h-12 text-black dark:text-white hover:bg-white hover:dark:bg-black/20 hover:backdrop-blur-sm hover:dark:shadow-md hover:dark:border-t-white/20 transition-all focus:ring-2 focus:ring-primary focus:border-primary dark:focus:border-primary focus-visible:ring-2 focus-visible:ring-primary" data-testid="select-confidence">
               <SelectValue placeholder="Confidence" />
             </SelectTrigger>
-            <SelectContent className="bg-white dark:bg-black border-black/10 dark:border-white/10 text-black dark:text-white">
+            <SelectContent className="no-hp-shadow hp-dropdown bg-white/90 dark:bg-black/40 backdrop-blur-xl border border-black/10 dark:border-white/10 text-black dark:text-white rounded-xl shadow-xl">
               <SelectItem value="All">All Confidence</SelectItem>
               <SelectItem value="1">1 - Needs Help</SelectItem>
               <SelectItem value="2">2 - Shaky</SelectItem>
@@ -57,7 +57,7 @@ export function SearchFilter({
             <SelectTrigger className="border-black/10 dark:border-white/10 bg-white/60 dark:bg-transparent backdrop-blur-none shadow-none rounded-full h-12 text-black dark:text-white hover:bg-white hover:dark:bg-black/20 hover:backdrop-blur-sm hover:dark:shadow-md hover:dark:border-t-white/20 transition-all focus:ring-2 focus:ring-primary focus:border-primary dark:focus:border-primary focus-visible:ring-2 focus-visible:ring-primary" data-testid="select-platform">
               <SelectValue placeholder="Platform" />
             </SelectTrigger>
-            <SelectContent className="bg-white dark:bg-black border-black/10 dark:border-white/10 text-black dark:text-white">
+            <SelectContent className="no-hp-shadow hp-dropdown bg-white/90 dark:bg-black/40 backdrop-blur-xl border border-black/10 dark:border-white/10 text-black dark:text-white rounded-xl shadow-xl">
               <SelectItem value="All">All Platforms</SelectItem>
               {PLATFORMS.map(p => (
                 <SelectItem key={p} value={p}>{p}</SelectItem>
@@ -69,7 +69,7 @@ export function SearchFilter({
             <SelectTrigger className="border-black/10 dark:border-white/10 bg-white/60 dark:bg-transparent backdrop-blur-none shadow-none rounded-full h-12 text-black dark:text-white hover:bg-white hover:dark:bg-black/20 hover:backdrop-blur-sm hover:dark:shadow-md hover:dark:border-t-white/20 transition-all focus:ring-2 focus:ring-primary focus:border-primary dark:focus:border-primary focus-visible:ring-2 focus-visible:ring-primary" data-testid="select-tag">
               <SelectValue placeholder="Tag" />
             </SelectTrigger>
-            <SelectContent className="bg-white dark:bg-black border-black/10 dark:border-white/10 text-black dark:text-white">
+            <SelectContent className="no-hp-shadow hp-dropdown bg-white/90 dark:bg-black/40 backdrop-blur-xl border border-black/10 dark:border-white/10 text-black dark:text-white rounded-xl shadow-xl">
               <SelectItem value="All">All Tags</SelectItem>
               {availableTags.map(t => (
                 <SelectItem key={t} value={t}>{t}</SelectItem>
@@ -81,7 +81,7 @@ export function SearchFilter({
             <SelectTrigger className="border-black/10 dark:border-white/10 bg-white/60 dark:bg-transparent backdrop-blur-none shadow-none rounded-full h-12 text-black dark:text-white hover:bg-white hover:dark:bg-black/20 hover:backdrop-blur-sm hover:dark:shadow-md hover:dark:border-t-white/20 transition-all focus:ring-2 focus:ring-primary focus:border-primary dark:focus:border-primary focus-visible:ring-2 focus-visible:ring-primary" data-testid="select-sort">
               <SelectValue placeholder="Sort By" />
             </SelectTrigger>
-            <SelectContent className="bg-white dark:bg-black border-black/10 dark:border-white/10 text-black dark:text-white">
+            <SelectContent className="no-hp-shadow hp-dropdown bg-white/90 dark:bg-black/40 backdrop-blur-xl border border-black/10 dark:border-white/10 text-black dark:text-white rounded-xl shadow-xl">
               <SelectItem value="nextRev">Next Revision (Urgent)</SelectItem>
               <SelectItem value="confidenceAsc">Confidence (Low to High)</SelectItem>
               <SelectItem value="confidenceDesc">Confidence (High to Low)</SelectItem>

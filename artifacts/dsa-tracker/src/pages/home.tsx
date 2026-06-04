@@ -1,4 +1,6 @@
 import { useState, useMemo } from "react";
+import { useTheme } from "next-themes";
+import { cn } from "@/lib/utils";
 import { Link } from "wouter";
 import { Plus, LogOut } from "lucide-react";
 import { AlienIcon } from "@/components/AlienIcon";
@@ -12,6 +14,7 @@ import {
   useDeleteQuestion,
 } from "@workspace/api-client-react";
 import { ThemeSelector } from "@/components/ThemeSelector";
+import { MusicButton } from "@/components/MusicButton";
 import { Dashboard } from "@/components/Dashboard";
 import { SearchFilter } from "@/components/SearchFilter";
 import { QuestionTable } from "@/components/QuestionTable";
@@ -24,6 +27,9 @@ import { RevisionModal } from "@/components/RevisionModal";
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 export default function Home() {
+  const { theme } = useTheme();
+  const isBrownTheme = theme === "harry-potter" || theme === "leetcode-elite";
+
   const [search, setSearch] = useState("");
   const [confidenceFilter, setConfidenceFilter] = useState("All");
   const [platformFilter, setPlatformFilter] = useState("All");
@@ -142,12 +148,13 @@ export default function Home() {
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <AlienIcon className="w-9 h-9 shrink-0 text-primary drop-shadow-[0_0_8px_rgba(var(--primary),0.5)]" />
-            <h1 className="hidden sm:block text-xl font-extrabold tracking-tight text-black dark:text-white truncate">
+            <h1 className="hidden sm:block text-xl font-extrabold tracking-tight text-black dark:text-white">
               Beatle
             </h1>
           </div>
           <div className="flex items-center gap-3">
             <ThemeSelector />
+            <MusicButton />
             {user && (
               <div className="hidden sm:flex items-center gap-2 text-sm text-black/70 dark:text-white/70 bg-black/[0.02] dark:bg-white/[0.02] px-3 py-1.5 rounded-full border border-black/5 dark:border-white/5">
                 <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary dark:text-primary font-bold text-[10px]">
@@ -165,7 +172,12 @@ export default function Home() {
             </button>
             <Link
               href="/add"
-              className="inline-flex items-center justify-center rounded-full text-sm font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:opacity-50 bg-black hover:bg-black/80 dark:bg-neutral-200 dark:hover:bg-neutral-300 text-white dark:text-black hover:scale-105 h-10 w-10 sm:w-auto p-0 sm:py-2 sm:px-6 shadow-md border-0 shrink-0"
+              className={cn(
+                "inline-flex items-center justify-center rounded-full text-sm font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:opacity-50 hover:scale-105 h-10 w-10 sm:w-auto p-0 sm:py-2 sm:px-6 shadow-md border-0 shrink-0",
+                isBrownTheme 
+                  ? "bg-[#5c3e21] hover:bg-[#4a3219] dark:bg-[#5c3e21] dark:hover:bg-[#4a3219] text-[#fde68a] dark:text-[#fde68a] border border-amber-900/50"
+                  : "bg-black hover:bg-black/80 dark:bg-neutral-200 dark:hover:bg-neutral-300 text-white dark:text-black"
+              )}
               data-testid="link-add-question"
             >
               <Plus className="w-5 h-5 sm:w-4 sm:h-4 sm:mr-2" />

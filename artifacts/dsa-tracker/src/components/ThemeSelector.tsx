@@ -11,13 +11,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const THEMES = [
-  { id: "light", name: "Light Mode", colors: ["#F8FAFC", "#8B5CF6", "#FFFFFF"] },
+  { id: "harry-potter", name: "Harry Potter", colors: ["#230C0F", "#F5B800", "#750002"] },
   { id: "dark", name: "Beatle Original", colors: ["#000000", "#A78BFA", "#080808"] },
   { id: "github-dark", name: "GitHub Dark", colors: ["#0D1117", "#58A6FF", "#161B22"] },
   { id: "terminal-hacker", name: "Hacker's Terminal", colors: ["#050505", "#00FF88", "#0A0A0A"] },
   { id: "leetcode-elite", name: "LeetCode Elite", colors: ["#111827", "#FFA116", "#1F2937"] },
   { id: "cyberpunk", name: "Cyberpunk", colors: ["#050014", "#9D4EDD", "#120024"] },
-  { id: "harry-potter", name: "Harry Potter", colors: ["#230C0F", "#F5B800", "#750002"] },
+  { id: "light", name: "Light Mode", colors: ["#F8FAFC", "#8B5CF6", "#FFFFFF"] },
 ];
 
 export function ThemeSelector() {
@@ -31,7 +31,7 @@ export function ThemeSelector() {
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56 rounded-2xl p-2 bg-background border-border shadow-xl">
+      <DropdownMenuContent align="end" className="w-56 rounded-2xl p-2 bg-background border-border shadow-xl no-hp-shadow hp-dropdown">
         <DropdownMenuLabel className="px-2 py-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
           Appearance
         </DropdownMenuLabel>

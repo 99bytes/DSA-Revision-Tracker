@@ -4,6 +4,7 @@ import { Link } from "wouter";
 import { Sparkles, ArrowRight, Github, Twitter, Brain, Target, Zap, CheckCircle2, ChevronRight, Play, Code2, BrainCircuit, LineChart, Flame, Tags, Clock, BookOpen, MonitorPlay } from "lucide-react";
 import { AlienIcon } from "@/components/AlienIcon";
 import { ThemeSelector } from "@/components/ThemeSelector";
+import { MusicButton } from "@/components/MusicButton";
 
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 
@@ -241,8 +242,8 @@ export default function LandingPage() {
   }, [headline, isDeleting, phraseIndex]);
 
   return (
-    <div 
-      className="bg-transparent flex flex-col relative pt-16 overflow-x-hidden after:absolute after:inset-0 after:bg-black/40 dark:after:bg-black/40 after:backdrop-blur-[2px] after:-z-10"
+    <div
+      className="bg-transparent flex flex-col relative pt-16 overflow-x-hidden after:absolute after:inset-0 after:bg-white/10 dark:after:bg-black/20 after:-z-10"
       onPointerMove={(e) => {
         clientX.set(e.clientX);
         clientY.set(e.clientY);
@@ -266,11 +267,12 @@ export default function LandingPage() {
           <div className="flex items-center gap-2">
             <AlienIcon className="w-9 h-9 shrink-0 text-primary drop-shadow-[0_0_8px_rgba(var(--primary),0.5)]" />
             <span className="text-xl font-extrabold tracking-tight text-black dark:text-white">
-              Beetle
+              Beatle
             </span>
           </div>
           <div className="flex items-center gap-4">
             <ThemeSelector />
+            <MusicButton />
             <Link
               href="/sign-in"
               className="text-sm font-semibold text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white transition-colors"
@@ -279,7 +281,7 @@ export default function LandingPage() {
             </Link>
             <Link
               href="/sign-up"
-              className="inline-flex items-center justify-center rounded-full text-sm font-bold transition-all bg-black hover:bg-black/80 dark:bg-neutral-200 dark:hover:bg-neutral-300 text-white dark:text-black hover:scale-105 h-9 py-2 px-5 shadow-md border-0"
+              className="magical-btn inline-flex items-center justify-center rounded-full text-sm font-bold transition-all bg-black hover:bg-black/80 dark:bg-neutral-200 dark:hover:bg-neutral-300 text-white dark:text-black hover:scale-105 h-9 py-2 px-5 shadow-md border-0 no-hp-shadow"
             >
               Get Started
             </Link>
@@ -294,10 +296,10 @@ export default function LandingPage() {
             Build Muscle Memory
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-black dark:text-white max-w-3xl mb-6 leading-tight min-h-[120px] md:min-h-[160px] flex items-center justify-center">
+          <h1 className="text-5xl md:text-7xl font-extrabold tracking-normal text-black dark:text-white max-w-3xl mb-8 leading-tight min-h-[120px] md:min-h-[160px] flex items-center justify-center drop-shadow-lg">
             <span>
               {headline}
-              <span className="inline-block w-[3px] h-[40px] md:h-[60px] ml-1 md:ml-2 bg-primary dark:bg-primary animate-pulse align-middle -mt-2"></span>
+              <span className="inline-block w-[3px] h-[40px] md:h-[60px] ml-2 md:ml-3 bg-primary dark:bg-primary animate-pulse align-middle -mt-2"></span>
             </span>
           </h1>
 
@@ -308,7 +310,7 @@ export default function LandingPage() {
           <div className="flex flex-col sm:flex-row items-center gap-4">
             <Link
               href="/sign-up"
-              className="group relative inline-flex items-center justify-center rounded-full text-base font-bold transition-all bg-black dark:bg-neutral-200 text-white dark:text-black hover:scale-105 h-12 px-8 w-full sm:w-auto border-0"
+              className="magical-btn group relative inline-flex items-center justify-center rounded-full text-base font-bold transition-all bg-black dark:bg-neutral-200 text-white dark:text-black hover:scale-105 h-12 px-8 w-full sm:w-auto border-0 no-hp-shadow"
             >
               <div className="absolute inset-0 rounded-full bg-primary/40 dark:bg-primary/50 blur-lg scale-110 opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
               <span className="relative z-10 flex items-center">

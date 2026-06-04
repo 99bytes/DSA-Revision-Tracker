@@ -1,7 +1,15 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
+import { useTheme } from "next-themes";
+import { Zap } from "lucide-react";
 
 export function AlienIcon({ className, ...props }: React.SVGProps<SVGSVGElement>) {
+  const { theme } = useTheme();
+
+  if (theme === "harry-potter") {
+    return <Zap className={cn("fill-current", className)} {...(props as any)} />;
+  }
+
   return (
     <svg 
       xmlns="http://www.w3.org/2000/svg" 

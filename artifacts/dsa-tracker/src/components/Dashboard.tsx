@@ -1,10 +1,13 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getDashboardStats } from "@/lib/revision";
 import { Question } from "@/lib/types";
-import { Brain, Flame, Target, TrendingUp } from "lucide-react";
+import { Brain, Flame, Target, TrendingUp, Scroll, Wand, Sparkles, Map } from "lucide-react";
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import { useEffect, useState } from "react";
 import { NextRevisionCountdown } from "./NextRevisionCountdown";
+import { useTheme } from "next-themes";
+import { cn } from "@/lib/utils";
+import { WizardWandIcon } from "./WizardWandIcon";
 
 function CountUp({ to }: { to: number }) {
   const count = useMotionValue(0);
@@ -25,6 +28,8 @@ function CountUp({ to }: { to: number }) {
 
 export function Dashboard({ questions }: { questions: Question[] }) {
   const stats = getDashboardStats(questions);
+  const { theme } = useTheme();
+  const isHP = theme === "harry-potter";
 
   const container = {
     hidden: { opacity: 0 },
@@ -58,11 +63,11 @@ export function Dashboard({ questions }: { questions: Question[] }) {
             whileHover={{ scale: 1.02, y: -8 }}
             className="h-full"
           >
-            <Card className="border border-black/10 dark:border-white/10 bg-white/60 dark:bg-transparent backdrop-blur-none rounded-[2rem] relative overflow-hidden shadow-sm dark:shadow-none hover:dark:bg-black/20 hover:backdrop-blur-sm hover:dark:shadow-md hover:dark:border-t-white/20 transition-all duration-300 h-full flex flex-col">
+            <Card className={cn("border border-black/10 dark:border-white/10 bg-white/60 dark:bg-transparent backdrop-blur-none rounded-[2rem] relative overflow-hidden shadow-sm dark:shadow-none hover:dark:bg-black/20 hover:backdrop-blur-sm transition-all duration-300 h-full flex flex-col", isHP ? "hover:shadow-[0_0_20px_rgba(212,175,55,0.4)] hover:border-[#d4af37]/50" : "hover:dark:shadow-md hover:dark:border-t-white/20")}>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10 px-6 pt-6">
-                <CardTitle className="text-sm font-medium tracking-wide text-black/70 dark:text-white/70 uppercase">Total Solved</CardTitle>
-                <div className="w-10 h-10 rounded-full border border-primary/20 flex items-center justify-center bg-primary/10 shrink-0">
-                  <Target className="h-5 w-5 text-primary dark:text-primary" />
+                <CardTitle className={cn("text-sm tracking-wide text-black/70 dark:text-white/70 uppercase", isHP ? "font-bold tracking-normal text-base text-[#d4af37] drop-shadow-md" : "font-medium")}>Total Solved</CardTitle>
+                <div className={cn("w-10 h-10 rounded-full border flex items-center justify-center shrink-0", isHP ? "border-[#d4af37]/30 bg-[#d4af37]/10" : "border-primary/20 bg-primary/10")}>
+                  {isHP ? <Scroll className="h-5 w-5 text-[#d4af37] drop-shadow-[0_0_5px_rgba(212,175,55,0.5)]" /> : <Target className="h-5 w-5 text-primary" />}
                 </div>
               </CardHeader>
               <CardContent className="relative z-10 px-6 pb-6 flex-1 flex flex-col justify-end">
@@ -70,9 +75,9 @@ export function Dashboard({ questions }: { questions: Question[] }) {
                   <CountUp to={stats.total} />
                 </div>
                 <p className="text-xs text-black/40 dark:text-white/40 mt-1">Questions tracked</p>
-                <div className="h-1 rounded-full bg-black/5 dark:bg-white/5 overflow-hidden mt-5 shadow-inner">
+                <div className="h-1 rounded-full bg-black/5 dark:bg-white/5 overflow-visible mt-5 shadow-inner relative">
                   <motion.div
-                    className="h-full rounded-full bg-primary"
+                    className={cn("h-full rounded-full absolute left-0 top-0", isHP ? "bg-[#d4af37] shadow-[0_0_10px_rgba(212,175,55,0.8)]" : "bg-primary")}
                     initial={{ width: 0 }}
                     animate={{ width: "100%" }}
                     transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
@@ -90,11 +95,11 @@ export function Dashboard({ questions }: { questions: Question[] }) {
             whileHover={{ scale: 1.02, y: -8 }}
             className="h-full"
           >
-            <Card className="border border-black/10 dark:border-white/10 bg-white/60 dark:bg-transparent backdrop-blur-none rounded-[2rem] relative overflow-hidden shadow-sm dark:shadow-none hover:dark:bg-black/20 hover:backdrop-blur-sm hover:dark:shadow-md hover:dark:border-t-white/20 transition-all duration-300 h-full flex flex-col">
+            <Card className={cn("border border-black/10 dark:border-white/10 bg-white/60 dark:bg-transparent backdrop-blur-none rounded-[2rem] relative overflow-hidden shadow-sm dark:shadow-none hover:dark:bg-black/20 hover:backdrop-blur-sm transition-all duration-300 h-full flex flex-col", isHP ? "hover:shadow-[0_0_20px_rgba(212,175,55,0.4)] hover:border-[#d4af37]/50" : "hover:dark:shadow-md hover:dark:border-t-white/20")}>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10 px-6 pt-6">
-                <CardTitle className="text-sm font-medium tracking-wide text-black/70 dark:text-white/70 uppercase">Weak Links</CardTitle>
-                <div className="w-10 h-10 rounded-full border border-red-500/20 flex items-center justify-center bg-red-500/10 shrink-0">
-                  <Flame className="h-5 w-5 text-red-500" />
+                <CardTitle className={cn("text-sm tracking-wide text-black/70 dark:text-white/70 uppercase", isHP ? "font-bold tracking-normal text-base text-[#d4af37] drop-shadow-md" : "font-medium")}>Weak Links</CardTitle>
+                <div className={cn("w-10 h-10 rounded-full border flex items-center justify-center shrink-0", isHP ? "border-[#d4af37]/30 bg-[#d4af37]/10" : "border-red-500/20 bg-red-500/10")}>
+                  {isHP ? <WizardWandIcon className="h-5 w-5 text-[#d4af37] drop-shadow-[0_0_5px_rgba(212,175,55,0.5)]" /> : <Flame className="h-5 w-5 text-red-500" />}
                 </div>
               </CardHeader>
               <CardContent className="relative z-10 px-6 pb-6 flex-1 flex flex-col justify-end">
@@ -102,9 +107,9 @@ export function Dashboard({ questions }: { questions: Question[] }) {
                   <CountUp to={stats.weak} />
                 </div>
                 <p className="text-xs text-black/40 dark:text-white/40 mt-1">Confidence ≤ 2</p>
-                <div className="h-1 rounded-full bg-black/5 dark:bg-white/5 overflow-hidden mt-5 shadow-inner">
+                <div className="h-1 rounded-full bg-black/5 dark:bg-white/5 overflow-visible mt-5 shadow-inner relative">
                   <motion.div
-                    className="h-full rounded-full bg-red-500"
+                    className={cn("h-full rounded-full absolute left-0 top-0", isHP ? "bg-[#d4af37] shadow-[0_0_10px_rgba(212,175,55,0.8)]" : "bg-red-500")}
                     initial={{ width: 0 }}
                     animate={{ width: `${stats.total > 0 ? Math.round((stats.weak / stats.total) * 100) : 0}%` }}
                     transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
@@ -122,11 +127,11 @@ export function Dashboard({ questions }: { questions: Question[] }) {
             whileHover={{ scale: 1.02, y: -8 }}
             className="h-full"
           >
-            <Card className="border border-black/10 dark:border-white/10 bg-white/60 dark:bg-transparent backdrop-blur-none rounded-[2rem] relative overflow-hidden shadow-sm dark:shadow-none hover:dark:bg-black/20 hover:backdrop-blur-sm hover:dark:shadow-md hover:dark:border-t-white/20 transition-all duration-300 h-full flex flex-col">
+            <Card className={cn("border border-black/10 dark:border-white/10 bg-white/60 dark:bg-transparent backdrop-blur-none rounded-[2rem] relative overflow-hidden shadow-sm dark:shadow-none hover:dark:bg-black/20 hover:backdrop-blur-sm transition-all duration-300 h-full flex flex-col", isHP ? "hover:shadow-[0_0_20px_rgba(212,175,55,0.4)] hover:border-[#d4af37]/50" : "hover:dark:shadow-md hover:dark:border-t-white/20")}>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10 px-6 pt-6">
-                <CardTitle className="text-sm font-medium tracking-wide text-black/70 dark:text-white/70 uppercase">Mastered</CardTitle>
-                <div className="w-10 h-10 rounded-full border border-emerald-500/20 flex items-center justify-center bg-emerald-500/10 shrink-0">
-                  <Brain className="h-5 w-5 text-emerald-500" />
+                <CardTitle className={cn("text-sm tracking-wide text-black/70 dark:text-white/70 uppercase", isHP ? "font-bold tracking-normal text-base text-[#d4af37] drop-shadow-md" : "font-medium")}>Mastered</CardTitle>
+                <div className={cn("w-10 h-10 rounded-full border flex items-center justify-center shrink-0", isHP ? "border-[#d4af37]/30 bg-[#d4af37]/10" : "border-emerald-500/20 bg-emerald-500/10")}>
+                  {isHP ? <Sparkles className="h-5 w-5 text-[#d4af37] drop-shadow-[0_0_5px_rgba(212,175,55,0.5)]" /> : <Brain className="h-5 w-5 text-emerald-500" />}
                 </div>
               </CardHeader>
               <CardContent className="relative z-10 px-6 pb-6 flex-1 flex flex-col justify-end">
@@ -134,9 +139,9 @@ export function Dashboard({ questions }: { questions: Question[] }) {
                   <CountUp to={stats.strong} />
                 </div>
                 <p className="text-xs text-black/40 dark:text-white/40 mt-1">Confidence ≥ 4</p>
-                <div className="h-1 rounded-full bg-black/5 dark:bg-white/5 overflow-hidden mt-5 shadow-inner">
+                <div className="h-1 rounded-full bg-black/5 dark:bg-white/5 overflow-visible mt-5 shadow-inner relative">
                   <motion.div
-                    className="h-full rounded-full bg-emerald-500"
+                    className={cn("h-full rounded-full absolute left-0 top-0", isHP ? "bg-[#d4af37] shadow-[0_0_10px_rgba(212,175,55,0.8)]" : "bg-emerald-500")}
                     initial={{ width: 0 }}
                     animate={{ width: `${stats.total > 0 ? Math.round((stats.strong / stats.total) * 100) : 0}%` }}
                     transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
@@ -154,11 +159,11 @@ export function Dashboard({ questions }: { questions: Question[] }) {
             whileHover={{ scale: 1.02, y: -8 }}
             className="h-full"
           >
-            <Card className="border border-black/10 dark:border-white/10 bg-white dark:bg-transparent rounded-[2rem] relative overflow-hidden shadow-sm dark:shadow-none hover:bg-slate-50 dark:hover:bg-white/[0.03] transition-colors h-full flex flex-col">
+            <Card className={cn("border border-black/10 dark:border-white/10 bg-white/60 dark:bg-transparent backdrop-blur-none rounded-[2rem] relative overflow-hidden shadow-sm dark:shadow-none hover:dark:bg-black/20 hover:backdrop-blur-sm transition-all duration-300 h-full flex flex-col", isHP ? "hover:shadow-[0_0_20px_rgba(212,175,55,0.4)] hover:border-[#d4af37]/50" : "hover:dark:shadow-md hover:dark:border-t-white/20")}>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10 px-6 pt-6">
-                <CardTitle className="text-sm font-medium tracking-wide text-black/70 dark:text-white/70 uppercase">Focus Area</CardTitle>
-                <div className="w-10 h-10 rounded-full border border-amber-500/20 flex items-center justify-center bg-amber-500/10 shrink-0">
-                  <TrendingUp className="h-5 w-5 text-amber-500" />
+                <CardTitle className={cn("text-sm tracking-wide text-black/70 dark:text-white/70 uppercase", isHP ? "font-bold tracking-normal text-base text-[#d4af37] drop-shadow-md" : "font-medium")}>Focus Area</CardTitle>
+                <div className={cn("w-10 h-10 rounded-full border flex items-center justify-center shrink-0", isHP ? "border-[#d4af37]/30 bg-[#d4af37]/10" : "border-amber-500/20 bg-amber-500/10")}>
+                  {isHP ? <Map className="h-5 w-5 text-[#d4af37] drop-shadow-[0_0_5px_rgba(212,175,55,0.5)]" /> : <TrendingUp className="h-5 w-5 text-amber-500" />}
                 </div>
               </CardHeader>
               <CardContent className="relative z-10 px-6 pb-6 flex-1 flex flex-col justify-end">
@@ -166,9 +171,9 @@ export function Dashboard({ questions }: { questions: Question[] }) {
                   {stats.mostFrequentWeakTopic || "None"}
                 </div>
                 <p className="text-xs text-black/40 dark:text-white/40 mt-1">Most frequent weak tag</p>
-                <div className="h-1 rounded-full bg-black/5 dark:bg-white/5 overflow-hidden mt-5 shadow-inner">
+                <div className="h-1 rounded-full bg-black/5 dark:bg-white/5 overflow-visible mt-5 shadow-inner relative">
                   <motion.div
-                    className="h-full rounded-full bg-amber-500"
+                    className={cn("h-full rounded-full absolute left-0 top-0", isHP ? "bg-[#d4af37] shadow-[0_0_10px_rgba(212,175,55,0.8)]" : "bg-amber-500")}
                     initial={{ width: 0 }}
                     animate={{ width: "100%" }}
                     transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}

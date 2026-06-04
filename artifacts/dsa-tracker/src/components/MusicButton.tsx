@@ -2,8 +2,15 @@ import { useState, useEffect } from "react";
 import { Music, VolumeX } from "lucide-react";
 import { useTheme } from "next-themes";
 
+const getInitialPlaying = () => {
+  if (typeof window !== 'undefined') {
+    return localStorage.getItem('hp-music-muted') !== 'true';
+  }
+  return true;
+};
+
 let globalAudio: HTMLAudioElement | null = null;
-let globalIsPlaying = true;
+let globalIsPlaying = getInitialPlaying();
 let listeners: ((playing: boolean) => void)[] = [];
 
 export function initAudio(baseUrl: string) {
@@ -32,20 +39,26 @@ if (typeof document !== 'undefined') {
 export function playHpTheme(baseUrl: string) {
   initAudio(baseUrl);
   globalIsPlaying = true;
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('hp-music-muted', 'false');
+  }
   listeners.forEach(l => l(true));
   globalAudio?.play().catch((err) => {
     if (err.name === 'NotAllowedError') {
       waitingForInteraction = true;
     } else {
       console.error("Audio playback failed:", err);
+      globalIsPlaying = false;
+      listeners.forEach(l => l(false));
     }
-    globalIsPlaying = false;
-    listeners.forEach(l => l(false));
   });
 }
 
 export function stopHpTheme() {
   globalIsPlaying = false;
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('hp-music-muted', 'true');
+  }
   listeners.forEach(l => l(false));
   globalAudio?.pause();
 }

@@ -234,7 +234,7 @@ function App() {
   return (
     <ThemeProvider
       attribute="class"
-      defaultTheme="cyberpunk"
+      defaultTheme="harry-potter"
       enableSystem={true}
       storageKey="dsa-theme"
       value={{

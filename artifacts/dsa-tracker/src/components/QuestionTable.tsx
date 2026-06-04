@@ -1,6 +1,17 @@
 import { Question } from "@/lib/types";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Trash2, Edit, CheckCircle2, ChevronDown, Search, Filter } from "lucide-react";
 import { AlienIcon } from "@/components/AlienIcon";
 import { calculateNextRevision, isOverdue } from "@/lib/revision";
@@ -137,16 +148,31 @@ export function QuestionTable({ questions, onMarkRevised, onDelete, onSelectQues
                           <Link href={`/edit/${q.id}`} className="inline-flex items-center justify-center h-8 w-8 rounded-full hover:bg-black/[0.03] dark:hover:bg-white/[0.03] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
                             <Edit className="h-4 w-4" />
                           </Link>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8 text-black/50 dark:text-white/50 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-500/10 transition-colors rounded-full"
-                            onClick={() => onDelete(q.id)}
-                            title="Delete"
-                            data-testid={`btn-delete-${q.id}`}
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8 text-black/50 dark:text-white/50 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-500/10 transition-colors rounded-full"
+                                title="Delete"
+                                data-testid={`btn-delete-${q.id}`}
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent className="bg-white/90 dark:bg-black/90 backdrop-blur-xl border-black/10 dark:border-white/10 rounded-[2rem]">
+                              <AlertDialogHeader>
+                                <AlertDialogTitle className="text-black dark:text-white font-extrabold tracking-tight">Are you absolutely sure?</AlertDialogTitle>
+                                <AlertDialogDescription className="text-black/60 dark:text-white/60 font-medium">
+                                  This will permanently delete the question "{q.name}" from your tracker. This action cannot be undone.
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel className="rounded-full font-bold">Cancel</AlertDialogCancel>
+                                <AlertDialogAction onClick={() => onDelete(q.id)} className="rounded-full font-bold bg-red-500 hover:bg-red-600 text-white border-0">Delete</AlertDialogAction>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
                         </div>
                       </TableCell>
                     </motion.tr>

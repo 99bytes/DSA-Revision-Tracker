@@ -17,8 +17,9 @@ import { SearchFilter } from "@/components/SearchFilter";
 import { QuestionTable } from "@/components/QuestionTable";
 import { QuestionDetailSheet } from "@/components/QuestionDetailSheet";
 import { useToast } from "@/hooks/use-toast";
-import { Question } from "@/lib/types";
+import { Question, CONFIDENCE_LABELS } from "@/lib/types";
 import { calculateNextRevision } from "@/lib/revision";
+import { RevisionModal } from "@/components/RevisionModal";
 
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 
@@ -29,6 +30,7 @@ export default function Home() {
   const [tagFilter, setTagFilter] = useState("All");
   const [sortBy, setSortBy] = useState("nextRev");
   const [selectedQuestion, setSelectedQuestion] = useState<Question | null>(null);
+  const [revisionQuestion, setRevisionQuestion] = useState<Question | null>(null);
 
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -91,9 +93,14 @@ export default function Home() {
     return result;
   }, [questions, search, confidenceFilter, platformFilter, tagFilter, sortBy]);
 
-  const handleMarkRevised = (q: Question) => {
+  const handleMarkRevisedClick = (q: Question) => {
+    setRevisionQuestion(q);
+  };
+
+  const confirmRevision = (confidence: number) => {
+    if (!revisionQuestion) return;
     updateMutation.mutate(
-      { id: q.id, data: { lastRevised: new Date().toISOString() } },
+      { id: revisionQuestion.id, data: { lastRevised: new Date().toISOString(), confidence: confidence as any } },
       {
         onSuccess: () => {
           queryClient.invalidateQueries({
@@ -101,8 +108,9 @@ export default function Home() {
           });
           toast({
             title: "Question revised",
-            description: `Updated revision date for ${q.name}. Next revision scheduled.`,
+            description: `Updated revision date for ${revisionQuestion.name}. Next revision scheduled.`,
           });
+          setRevisionQuestion(null);
         },
       },
     );
@@ -215,7 +223,7 @@ export default function Home() {
           ) : (
             <QuestionTable
               questions={filteredAndSortedQuestions}
-              onMarkRevised={handleMarkRevised}
+              onMarkRevised={handleMarkRevisedClick}
               onDelete={handleDelete}
               onSelectQuestion={setSelectedQuestion}
             />
@@ -227,6 +235,12 @@ export default function Home() {
         question={selectedQuestion}
         open={!!selectedQuestion}
         onOpenChange={(open) => !open && setSelectedQuestion(null)}
+      />
+
+      <RevisionModal
+        isOpen={!!revisionQuestion}
+        onOpenChange={(open) => !open && setRevisionQuestion(null)}
+        onSelect={(confidence) => confirmRevision(confidence)}
       />
     </div>
   );

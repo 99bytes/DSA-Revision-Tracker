@@ -2,46 +2,68 @@ import { useState, useEffect } from "react";
 import { Music, VolumeX } from "lucide-react";
 import { useTheme } from "next-themes";
 
-// Use a singleton audio instance so it persists across page navigations
-// without duplicating or ghost-playing when components unmount.
 let globalAudio: HTMLAudioElement | null = null;
 let globalIsPlaying = true;
+let listeners: ((playing: boolean) => void)[] = [];
+
+export function initAudio(baseUrl: string) {
+  if (!globalAudio) {
+    const audioUrl = `${baseUrl}harry_potter_theme.mp3`;
+    globalAudio = new Audio(audioUrl);
+    globalAudio.loop = true;
+    globalAudio.volume = 0.4;
+  }
+}
+
+export function playHpTheme(baseUrl: string) {
+  initAudio(baseUrl);
+  globalIsPlaying = true;
+  listeners.forEach(l => l(true));
+  globalAudio?.play().catch((err) => {
+    console.error("Audio playback failed:", err);
+    globalIsPlaying = false;
+    listeners.forEach(l => l(false));
+  });
+}
+
+export function stopHpTheme() {
+  globalIsPlaying = false;
+  listeners.forEach(l => l(false));
+  globalAudio?.pause();
+}
 
 export function MusicButton() {
-  // Use state to trigger re-renders, but sync with globalIsPlaying
   const [isPlaying, setIsPlaying] = useState(globalIsPlaying);
   const { theme } = useTheme();
 
   useEffect(() => {
-    // Only initialize the global audio once
-    if (!globalAudio) {
-      const audioUrl = `${import.meta.env.BASE_URL}harry_potter_theme.mp3`;
-      globalAudio = new Audio(audioUrl);
-      globalAudio.loop = true;
-      globalAudio.volume = 0.4;
-    }
+    const handleStateChange = (state: boolean) => setIsPlaying(state);
+    listeners.push(handleStateChange);
+    return () => {
+      listeners = listeners.filter(l => l !== handleStateChange);
+    };
+  }, []);
 
-    if (theme === 'harry-potter' && isPlaying) {
-      // Browser might block autoplay until user interacts
-      globalAudio.play().catch((err) => {
-        console.error("Audio playback failed:", err);
-        setIsPlaying(false);
-        globalIsPlaying = false;
-      });
+  useEffect(() => {
+    if (theme === 'harry-potter') {
+      if (globalIsPlaying) {
+        playHpTheme(import.meta.env.BASE_URL);
+      }
     } else {
-      globalAudio.pause();
+      stopHpTheme();
     }
-  }, [theme, isPlaying]);
+  }, [theme]);
 
-  // Sync state changes to global
   const togglePlay = () => {
-    const nextState = !isPlaying;
-    setIsPlaying(nextState);
-    globalIsPlaying = nextState;
+    if (isPlaying) {
+      stopHpTheme();
+    } else {
+      playHpTheme(import.meta.env.BASE_URL);
+    }
   };
 
   if (theme !== 'harry-potter') {
-    return null; // Only show in Harry Potter theme
+    return null;
   }
 
   return (

@@ -1,5 +1,6 @@
 import { Monitor, Palette } from "lucide-react";
 import { useTheme } from "next-themes";
+import { playHpTheme, stopHpTheme } from "./MusicButton";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -54,7 +55,14 @@ export function ThemeSelector() {
           {THEMES.map((t) => (
             <DropdownMenuItem
               key={t.id}
-              onClick={() => setTheme(t.id)}
+              onClick={() => {
+                setTheme(t.id);
+                if (t.id === 'harry-potter') {
+                  playHpTheme(import.meta.env.BASE_URL);
+                } else {
+                  stopHpTheme();
+                }
+              }}
               className="flex items-center justify-between cursor-pointer rounded-xl px-2 py-2 hover:bg-black/5 dark:hover:bg-white/5 transition-colors focus:bg-black/5 dark:focus:bg-white/5 focus:text-foreground"
             >
               <span className="text-sm font-medium">{t.name}</span>

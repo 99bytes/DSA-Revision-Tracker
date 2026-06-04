@@ -5,7 +5,7 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue)
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.x-38B2AC)
 
-**Live Demo:** [https://dsa-revision-tracker-dsa-tracker-two.vercel.app/](https://dsa-revision-tracker-dsa-tracker-two.vercel.app/)
+**Live Demo:** [https://dsa-revision-tracker-dsa-tracker-two.vercel.app/](https://dsa-vault-two.vercel.app/)
 
 ## 🚀 Overview
 

@@ -494,6 +494,8 @@
 
   /* Fonts and Text Visibility */
   font-family: 'IM Fell English', serif;
+  word-spacing: 0.15em;
+  letter-spacing: 0.02em;
 }
 
 .harry-potter h1,
@@ -503,6 +505,8 @@
 .harry-potter .font-extrabold {
   font-family: 'Henny Penny', cursive;
   font-weight: normal;
+  word-spacing: 0.2em;
+  letter-spacing: 0.04em;
 }
 
 /* Force bright text with strong dark shadow for readability against the map */

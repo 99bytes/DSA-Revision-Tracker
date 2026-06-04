@@ -12,6 +12,7 @@ import {
   getListQuestionsQueryKey,
   useUpdateQuestion,
   useDeleteQuestion,
+  useCreateRevision,
 } from "@workspace/api-client-react";
 import { ThemeSelector } from "@/components/ThemeSelector";
 import { MusicButton } from "@/components/MusicButton";
@@ -53,6 +54,7 @@ export default function Home() {
 
   const updateMutation = useUpdateQuestion();
   const deleteMutation = useDeleteQuestion();
+  const createRevisionMutation = useCreateRevision();
 
   const availableTags = useMemo(() => {
     const tags = new Set<string>();
@@ -109,6 +111,14 @@ export default function Home() {
       { id: revisionQuestion.id, data: { lastRevised: new Date().toISOString(), confidence: confidence as any } },
       {
         onSuccess: () => {
+          createRevisionMutation.mutate({
+            data: {
+              questionId: revisionQuestion.id,
+              previousConfidence: revisionQuestion.confidence,
+              newConfidence: confidence,
+            }
+          });
+
           queryClient.invalidateQueries({
             queryKey: getListQuestionsQueryKey(),
           });

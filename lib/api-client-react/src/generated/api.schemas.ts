@@ -9,6 +9,28 @@ export interface HealthStatus {
   status: string;
 }
 
+export interface Revision {
+  id: string;
+  questionId: string;
+  previousConfidence: number;
+  newConfidence: number;
+  createdAt: string;
+}
+
+export interface RevisionInput {
+  questionId: string;
+  /**
+     * @minimum 1
+     * @maximum 5
+     */
+  previousConfidence: number;
+  /**
+     * @minimum 1
+     * @maximum 5
+     */
+  newConfidence: number;
+}
+
 export interface Question {
   id: string;
   name: string;

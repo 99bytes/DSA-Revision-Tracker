@@ -18,6 +18,35 @@ export const HealthCheckResponse = zod.object({
 
 
 /**
+ * @summary List all revisions
+ */
+export const ListRevisionsResponseItem = zod.object({
+  "id": zod.string(),
+  "questionId": zod.string(),
+  "previousConfidence": zod.number(),
+  "newConfidence": zod.number(),
+  "createdAt": zod.string()
+})
+export const ListRevisionsResponse = zod.array(ListRevisionsResponseItem)
+
+
+/**
+ * @summary Create a revision
+ */
+export const createRevisionBodyPreviousConfidenceMax = 5;
+
+export const createRevisionBodyNewConfidenceMax = 5;
+
+
+
+export const CreateRevisionBody = zod.object({
+  "questionId": zod.string(),
+  "previousConfidence": zod.number().min(1).max(createRevisionBodyPreviousConfidenceMax),
+  "newConfidence": zod.number().min(1).max(createRevisionBodyNewConfidenceMax)
+})
+
+
+/**
  * @summary List all questions
  */
 export const ListQuestionsResponseItem = zod.object({

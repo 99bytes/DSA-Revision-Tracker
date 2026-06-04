@@ -7,11 +7,10 @@ import { AlertCircle, CalendarClock, Target, Trophy, Clock, Zap, CheckCircle2, C
 import { AlienIcon } from "@/components/AlienIcon";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { useUpdateQuestion, getListQuestionsQueryKey } from "@workspace/api-client-react";
+import { useUpdateQuestion, getListQuestionsQueryKey, useCreateRevision } from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { RevisionModal } from "./RevisionModal";
 import { useToast } from "@/hooks/use-toast";
-import { logRevision } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
 function CircularProgress({
@@ -71,6 +70,7 @@ export function NextRevisionCountdown({ questions, stats }: { questions: Questio
   const [isModalOpen, setIsModalOpen] = useState(false);
   const queryClient = useQueryClient();
   const updateMutation = useUpdateQuestion();
+  const createRevisionMutation = useCreateRevision();
   const { toast } = useToast();
 
   useEffect(() => {
@@ -127,11 +127,12 @@ export function NextRevisionCountdown({ questions, stats }: { questions: Questio
       },
       {
         onSuccess: () => {
-          logRevision({
-            questionId: nearestQuestion.id,
-            revisedAt: newLastRevised,
-            previousConfidence: nearestQuestion.confidence,
-            newConfidence: confidence,
+          createRevisionMutation.mutate({
+            data: {
+              questionId: nearestQuestion.id,
+              previousConfidence: nearestQuestion.confidence,
+              newConfidence: confidence,
+            }
           });
 
           queryClient.invalidateQueries({ queryKey: getListQuestionsQueryKey() });

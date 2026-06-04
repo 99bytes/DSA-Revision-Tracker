@@ -10,3 +10,5 @@ export * from './healthStatus';
 export * from './question';
 export * from './questionInput';
 export * from './questionUpdate';
+export * from './revision';
+export * from './revisionInput';

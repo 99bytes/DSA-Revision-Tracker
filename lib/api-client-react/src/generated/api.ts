@@ -23,7 +23,9 @@ import type {
   HealthStatus,
   Question,
   QuestionInput,
-  QuestionUpdate
+  QuestionUpdate,
+  Revision,
+  RevisionInput
 } from './api.schemas';
 
 import { customFetch } from '../custom-fetch';
@@ -115,6 +117,154 @@ export function useHealthCheck<TData = Awaited<ReturnType<typeof healthCheck>>, 
 
 
 
+
+export const getListRevisionsUrl = () => {
+
+
+
+
+  return `/api/revisions`
+}
+
+/**
+ * @summary List all revisions
+ */
+export const listRevisions = async ( options?: RequestInit): Promise<Revision[]> => {
+
+  return customFetch<Revision[]>(getListRevisionsUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getListRevisionsQueryKey = () => {
+    return [
+    `/api/revisions`
+    ] as const;
+    }
+
+
+export const getListRevisionsQueryOptions = <TData = Awaited<ReturnType<typeof listRevisions>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof listRevisions>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getListRevisionsQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof listRevisions>>> = ({ signal }) => listRevisions({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listRevisions>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type ListRevisionsQueryResult = NonNullable<Awaited<ReturnType<typeof listRevisions>>>
+export type ListRevisionsQueryError = ErrorType<unknown>
+
+
+/**
+ * @summary List all revisions
+ */
+
+export function useListRevisions<TData = Awaited<ReturnType<typeof listRevisions>>, TError = ErrorType<unknown>>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof listRevisions>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getListRevisionsQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+
+
+
+
+
+
+export const getCreateRevisionUrl = () => {
+
+
+
+
+  return `/api/revisions`
+}
+
+/**
+ * @summary Create a revision
+ */
+export const createRevision = async (revisionInput: RevisionInput, options?: RequestInit): Promise<Revision> => {
+
+  return customFetch<Revision>(getCreateRevisionUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      revisionInput,)
+  }
+);}
+
+
+
+
+export const getCreateRevisionMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createRevision>>, TError,{data: BodyType<RevisionInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof createRevision>>, TError,{data: BodyType<RevisionInput>}, TContext> => {
+
+const mutationKey = ['createRevision'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createRevision>>, {data: BodyType<RevisionInput>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  createRevision(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreateRevisionMutationResult = NonNullable<Awaited<ReturnType<typeof createRevision>>>
+    export type CreateRevisionMutationBody = BodyType<RevisionInput>
+    export type CreateRevisionMutationError = ErrorType<unknown>
+
+    /**
+ * @summary Create a revision
+ */
+export const useCreateRevision = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createRevision>>, TError,{data: BodyType<RevisionInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof createRevision>>,
+        TError,
+        {data: BodyType<RevisionInput>},
+        TContext
+      > => {
+      return useMutation(getCreateRevisionMutationOptions(options));
+    }
 
 export const getListQuestionsUrl = () => {
 

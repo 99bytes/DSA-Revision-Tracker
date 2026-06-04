@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, useMotionValue, useSpring, useAnimationFrame, useTransform, AnimatePresence } from "framer-motion";
 import { Link } from "wouter";
+import { useTheme } from "next-themes";
 import { Sparkles, ArrowRight, Github, Twitter, Brain, Target, Zap, CheckCircle2, ChevronRight, Play, Code2, BrainCircuit, LineChart, Flame, Tags, Clock, BookOpen, MonitorPlay } from "lucide-react";
 import { AlienIcon } from "@/components/AlienIcon";
 import { ThemeSelector } from "@/components/ThemeSelector";
@@ -195,9 +196,15 @@ const INITIAL_POSITIONS = [
 ];
 
 export default function LandingPage() {
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const [headline, setHeadline] = useState("");
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Global mouse tracking for the fixed glow
   const clientX = useMotionValue(-1000);
@@ -243,12 +250,23 @@ export default function LandingPage() {
 
   return (
     <div
-      className="bg-transparent flex flex-col relative pt-16 overflow-x-hidden after:absolute after:inset-0 after:bg-white/10 dark:after:bg-black/20 after:-z-10"
+      className="bg-transparent flex flex-col relative pt-16 overflow-x-hidden"
       onPointerMove={(e) => {
         clientX.set(e.clientX);
         clientY.set(e.clientY);
       }}
     >
+      {mounted && theme === 'harry-potter' && (
+        <>
+          {/* High-End Cinematic Background */}
+          <div 
+            className="fixed inset-0 z-[-20] bg-cover bg-center bg-no-repeat opacity-80 dark:opacity-100 mix-blend-overlay dark:mix-blend-normal transition-opacity duration-1000"
+            style={{ backgroundImage: `url(${basePath}/Harry-bg.png)` }}
+          />
+          {/* Gradient overlay to ensure text readability in the center */}
+          <div className="fixed inset-0 z-[-19] bg-gradient-to-b from-white/90 via-white/50 to-white/90 dark:from-black/90 dark:via-black/40 dark:to-black/90 pointer-events-none" />
+        </>
+      )}
       {/* Global Glowing Cursor Tracker */}
       <motion.div
         style={{ left: clientX, top: clientY, x: "-50%", y: "-50%" }}

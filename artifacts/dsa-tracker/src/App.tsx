@@ -49,7 +49,7 @@ const clerkAppearance = {
     borderRadius: "1rem",
   },
   elements: {
-    badge: "text-[10px] font-bold uppercase tracking-widest bg-violet-500/10 text-violet-600 dark:bg-violet-500/20 dark:text-violet-300 px-2.5 py-0.5 rounded-full border border-violet-500/20 shadow-sm",
+    badge: "text-[10px] font-bold uppercase tracking-widest bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary px-2.5 py-0.5 rounded-full border border-primary/20 shadow-sm",
     rootBox: "w-full flex justify-center",
     cardBox: "bg-white dark:bg-black border border-black/10 dark:border-white/10 rounded-3xl w-[440px] max-w-full overflow-hidden shadow-2xl shadow-black/10 dark:shadow-white/5",
     card: "!shadow-none !border-0 !bg-transparent !rounded-none",
@@ -59,14 +59,14 @@ const clerkAppearance = {
     socialButtonsBlockButtonText: "text-black dark:text-white font-bold",
     socialButtonsBlockButton: "bg-black/[0.02] dark:bg-white/[0.02] border border-black/10 dark:border-white/10 hover:bg-black/[0.05] dark:hover:bg-white/[0.05] h-11 rounded-xl transition-colors",
     formFieldLabel: "text-black/70 dark:text-white/70 font-bold",
-    formFieldInput: "bg-transparent border border-black/10 dark:border-white/10 text-black dark:text-white rounded-xl h-11 focus:border-violet-500",
+    formFieldInput: "bg-transparent border border-black/10 dark:border-white/10 text-black dark:text-white rounded-xl h-11 focus:border-primary",
     formButtonPrimary: "bg-black hover:bg-black/80 dark:bg-neutral-200 dark:hover:bg-neutral-300 text-white dark:text-black font-bold shadow-md h-11 rounded-xl transition-colors",
-    footerActionLink: "text-violet-600 dark:text-violet-400 font-bold hover:text-violet-700 dark:hover:text-violet-300",
+    footerActionLink: "text-primary dark:text-primary font-bold hover:text-primary dark:hover:text-primary",
     footerActionText: "text-black/60 dark:text-white/60",
     dividerText: "text-black/40 dark:text-white/40 font-medium",
     dividerLine: "bg-black/10 dark:bg-white/10",
     logoBox: "mb-4",
-    logoImage: "h-12 w-auto filter dark:invert",
+    logoImage: "h-12 w-auto",
     formFieldRow: "gap-4",
     main: "gap-6",
     formFieldSuccessText: "text-green-500 font-medium",
@@ -159,7 +159,7 @@ function ClerkProviderWithRoutes() {
         signIn: {
           start: {
             title: "Welcome back",
-            subtitle: "Sign in to your DSA Tracker",
+            subtitle: "Sign in to Beatle",
           },
         },
         signUp: {
@@ -190,7 +190,21 @@ function ClerkProviderWithRoutes() {
 
 function App() {
   return (
-    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} storageKey="dsa-theme">
+    <ThemeProvider 
+      attribute="class" 
+      defaultTheme="dark" 
+      enableSystem={true} 
+      storageKey="dsa-theme"
+      value={{
+        light: "light",
+        dark: "dark",
+        "github-dark": "github-dark",
+        "terminal-hacker": "terminal-hacker",
+        "leetcode-elite": "leetcode-elite",
+        "cyberpunk": "cyberpunk",
+        "harry-potter": "harry-potter"
+      }}
+    >
       <div className="bg-glow-orbs">
         <div className="glow-orb glow-orb-1"></div>
         <div className="glow-orb glow-orb-2"></div>

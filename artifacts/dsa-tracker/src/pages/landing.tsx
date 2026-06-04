@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, useMotionValue, useSpring, useAnimationFrame, useTransform, AnimatePresence } from "framer-motion";
 import { Link } from "wouter";
-import { ArrowRight, Code2, BrainCircuit, LineChart, Flame, Tags, Clock, BookOpen, MonitorPlay } from "lucide-react";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { Sparkles, ArrowRight, Github, Twitter, Brain, Target, Zap, CheckCircle2, ChevronRight, Play, Code2, BrainCircuit, LineChart, Flame, Tags, Clock, BookOpen, MonitorPlay } from "lucide-react";
+import { AlienIcon } from "@/components/AlienIcon";
+import { ThemeSelector } from "@/components/ThemeSelector";
 
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 
@@ -10,12 +11,12 @@ const quotesBank = [
   {
     title: "Patience is O(1)",
     desc: "Take a deep breath. Not every bug is fixed in constant time.",
-    icon: BrainCircuit, iconColor: "text-violet-500", gradient: "from-violet-500/10", rotate: -4
+    icon: BrainCircuit, iconColor: "text-primary", gradient: "from-primary/10", rotate: -4
   },
   {
     title: "Divide & Conquer",
     desc: "Break the problem down until it's small enough to solve.",
-    icon: Code2, iconColor: "text-cyan-500", gradient: "from-cyan-500/10", rotate: 5
+    icon: Code2, iconColor: "text-secondary", gradient: "from-secondary/10", rotate: 5
   },
   {
     title: "Memoization",
@@ -84,7 +85,7 @@ const quotesBank = [
   }
 ];
 
-function FloatingCard({ feature, mouseX, mouseY, index, cx, cy }: { feature: any, mouseX: any, mouseY: any, index: number, cx: number, cy: number }) {
+function FloatingCard({ feature, clientX, clientY, index, cx, cy, sectionRef }: { feature: any, clientX: any, clientY: any, index: number, cx: number, cy: number, sectionRef: React.RefObject<HTMLElement | null> }) {
   const xOffset = useMotionValue(0);
   const yOffset = useMotionValue(0);
   const scaleVal = useMotionValue(1);
@@ -96,9 +97,9 @@ function FloatingCard({ feature, mouseX, mouseY, index, cx, cy }: { feature: any
   const scaleSpring = useSpring(scaleVal, springConfig);
 
   useAnimationFrame(() => {
-    const mx = mouseX.get();
-    const my = mouseY.get();
-    if (mx === -1000) {
+    const mx = clientX.get();
+    const my = clientY.get();
+    if (mx === -1000 || !sectionRef.current) {
       // Mouse is outside the section, relax back to original state
       xOffset.set(0);
       yOffset.set(0);
@@ -106,19 +107,14 @@ function FloatingCard({ feature, mouseX, mouseY, index, cx, cy }: { feature: any
       return;
     }
 
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    
-    // Card's center coordinate in pixels (relative to the section)
-    const cardPxX = (cx / 100) * width;
-    const cardPxY = (cy / 100) * height;
-    
-    // Mouse coordinate in pixels (relative to the section)
-    const mousePxX = (mx / 100) * width;
-    const mousePxY = (my / 100) * height;
+    const rect = sectionRef.current.getBoundingClientRect();
 
-    const dx = cardPxX - mousePxX;
-    const dy = cardPxY - mousePxY;
+    // Card's center coordinate in pixels (relative to viewport)
+    const cardPxX = rect.left + (cx / 100) * rect.width;
+    const cardPxY = rect.top + (cy / 100) * rect.height;
+
+    const dx = cardPxX - mx;
+    const dy = cardPxY - my;
     const dist = Math.sqrt(dx * dx + dy * dy);
 
     // Distance threshold to trigger repulsion (pixels)
@@ -126,12 +122,12 @@ function FloatingCard({ feature, mouseX, mouseY, index, cx, cy }: { feature: any
 
     if (dist < threshold && dist > 0) {
       // Force is stronger the closer the mouse is (0 to 1)
-      const force = (threshold - dist) / threshold; 
-      
+      const force = (threshold - dist) / threshold;
+
       // Push away heavily (up to 300px away)
       xOffset.set((dx / dist) * force * 300);
       yOffset.set((dy / dist) * force * 300);
-      
+
       // Decrease size as it's pushed away
       scaleVal.set(1 - (force * 0.35));
     } else {
@@ -206,29 +202,7 @@ export default function LandingPage() {
   const clientX = useMotionValue(-1000);
   const clientY = useMotionValue(-1000);
 
-  // Mouse tracking state for Page 2
-  const mouseX = useMotionValue(-1000);
-  const mouseY = useMotionValue(-1000);
-
-  const handlePointerMove = (e: React.PointerEvent<HTMLElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    
-    // Pixels relative to section
-    const xPx = e.clientX - rect.left;
-    const yPx = e.clientY - rect.top;
-
-    // Percentages relative to section (for card repulsion & glow)
-    const xPct = (xPx / rect.width) * 100;
-    const yPct = (yPx / rect.height) * 100;
-    
-    mouseX.set(xPct);
-    mouseY.set(yPct);
-  };
-
-  const handlePointerLeave = () => {
-    mouseX.set(-1000);
-    mouseY.set(-1000);
-  };
+  const sectionRef = useRef<HTMLElement>(null);
 
   const phrases = [
     "Master Data Structures & Algorithms.",
@@ -268,35 +242,35 @@ export default function LandingPage() {
 
   return (
     <div 
-      className="bg-transparent flex flex-col relative pt-16"
+      className="bg-transparent flex flex-col relative pt-16 overflow-x-hidden after:absolute after:inset-0 after:bg-black/40 dark:after:bg-black/40 after:backdrop-blur-[2px] after:-z-10"
       onPointerMove={(e) => {
         clientX.set(e.clientX);
         clientY.set(e.clientY);
       }}
     >
       {/* Global Glowing Cursor Tracker */}
-      <motion.div 
+      <motion.div
         style={{ left: clientX, top: clientY, x: "-50%", y: "-50%" }}
-        className="fixed w-[400px] h-[400px] bg-cyan-400/20 dark:bg-cyan-500/20 rounded-full blur-[80px] pointer-events-none z-0 mix-blend-screen"
+        className="fixed w-[400px] h-[400px] bg-secondary/20 dark:bg-secondary/20 rounded-full blur-[80px] pointer-events-none z-0 mix-blend-screen"
       />
 
       {/* Ambient Background Orbs */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
-        <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-violet-600/20 dark:bg-violet-500/15 blur-[120px]" />
-        <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-cyan-600/20 dark:bg-cyan-500/15 blur-[120px]" />
+        <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-primary/20 dark:bg-primary/15 blur-[120px]" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-secondary/20 dark:bg-secondary/15 blur-[120px]" />
       </div>
 
       {/* Header */}
-      <header className="bg-background/80 dark:bg-background/10 backdrop-blur-2xl fixed top-0 inset-x-0 w-full z-50">
+      <header className="border-b border-black/10 dark:border-white/10 bg-white/60 dark:bg-black/20 backdrop-blur-md fixed top-0 inset-x-0 w-full z-50 shadow-sm dark:shadow-none">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <img src={`${basePath}/logo.svg`} alt="Logo" className="w-9 h-9 shrink-0" />
+            <AlienIcon className="w-9 h-9 shrink-0 text-primary drop-shadow-[0_0_8px_rgba(var(--primary),0.5)]" />
             <span className="text-xl font-extrabold tracking-tight text-black dark:text-white">
-              Revision <span className="text-violet-600 dark:text-violet-400 font-bold">Tracker</span>
+              Beetle
             </span>
           </div>
           <div className="flex items-center gap-4">
-            <ThemeToggle />
+            <ThemeSelector />
             <Link
               href="/sign-in"
               className="text-sm font-semibold text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white transition-colors"
@@ -316,27 +290,27 @@ export default function LandingPage() {
       {/* PAGE 1: Hero Section */}
       <main className="w-full px-4 text-center z-10">
         <div className="flex flex-col items-center justify-center h-[calc(100vh-4rem)] w-full max-w-4xl mx-auto relative">
-          <div className="inline-flex items-center justify-center rounded-full px-3 py-1 mb-8 border border-violet-500/20 bg-violet-500/10 text-violet-600 dark:text-violet-400 text-xs font-semibold tracking-wide uppercase">
+          <div className="inline-flex items-center justify-center rounded-full px-3 py-1 mb-8 border border-primary/20 bg-primary/10 text-primary dark:text-primary text-xs font-semibold tracking-wide uppercase">
             Build Muscle Memory
           </div>
-          
+
           <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-black dark:text-white max-w-3xl mb-6 leading-tight min-h-[120px] md:min-h-[160px] flex items-center justify-center">
             <span>
               {headline}
-              <span className="inline-block w-[3px] h-[40px] md:h-[60px] ml-1 md:ml-2 bg-violet-600 dark:bg-violet-400 animate-pulse align-middle -mt-2"></span>
+              <span className="inline-block w-[3px] h-[40px] md:h-[60px] ml-1 md:ml-2 bg-primary dark:bg-primary animate-pulse align-middle -mt-2"></span>
             </span>
           </h1>
-          
+
           <p className="text-lg md:text-xl text-black/60 dark:text-white/60 max-w-2xl mb-10 leading-relaxed">
             Stop forgetting the problems you've already solved. Use confidence-based spaced repetition to optimize your interview prep.
           </p>
-          
+
           <div className="flex flex-col sm:flex-row items-center gap-4">
             <Link
               href="/sign-up"
               className="group relative inline-flex items-center justify-center rounded-full text-base font-bold transition-all bg-black dark:bg-neutral-200 text-white dark:text-black hover:scale-105 h-12 px-8 w-full sm:w-auto border-0"
             >
-              <div className="absolute inset-0 rounded-full bg-violet-500/40 dark:bg-violet-400/50 blur-lg scale-110 opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
+              <div className="absolute inset-0 rounded-full bg-primary/40 dark:bg-primary/50 blur-lg scale-110 opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
               <span className="relative z-10 flex items-center">
                 Start Tracking Free
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -347,18 +321,18 @@ export default function LandingPage() {
       </main>
 
       {/* PAGE 2: Floating Water Cards */}
-      <section 
-        className="relative w-full h-[100vh] overflow-hidden hidden md:block"
-        onPointerMove={handlePointerMove}
-        onPointerLeave={handlePointerLeave}
+      <section
+        ref={sectionRef}
+        className="relative w-full h-[100vh] hidden md:block"
       >
         {/* Floating Physics Cards */}
         {INITIAL_POSITIONS.map((pos, index) => (
-          <FloatingCard 
-            key={index} 
-            feature={quotesBank[pos.templateIndex]} 
-            mouseX={mouseX} 
-            mouseY={mouseY} 
+          <FloatingCard
+            key={index}
+            feature={quotesBank[pos.templateIndex]}
+            clientX={clientX}
+            clientY={clientY}
+            sectionRef={sectionRef}
             index={index}
             cx={pos.cx}
             cy={pos.cy}
@@ -379,7 +353,7 @@ export default function LandingPage() {
       </section>
 
       <footer className="py-8 text-center text-sm text-black/40 dark:text-white/40 border-t border-black/5 dark:border-white/5 relative z-10 bg-background/80 backdrop-blur-md">
-        <p>© {new Date().getFullYear()} DSA Revision Tracker. Built for developers.</p>
+        <p>© {new Date().getFullYear()} Beatle. Built for developers.</p>
       </footer>
     </div>
   );

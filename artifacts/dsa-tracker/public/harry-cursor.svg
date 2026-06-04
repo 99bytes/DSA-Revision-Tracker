@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <g transform="translate(-10, -20) rotate(35 32 32)">
+    <!-- Broom Handle (Tip is on the left) -->
+    <rect x="8" y="40" width="44" height="4" rx="2" fill="#8B4513" stroke="#000" stroke-width="2"/>
+    
+    <!-- Broom Tail (On the right) -->
+    <path d="M 48,36 C 58,32 62,36 60,42 C 62,48 58,52 48,48 Z" fill="#5C3A21" stroke="#000" stroke-width="2"/>
+    <path d="M 48,36 L 48,48" stroke="#000" stroke-width="2"/>
+    <path d="M 52,35 L 52,49" stroke="#000" stroke-width="2"/>
+    
+    <!-- Body/Robe (Leaning left) -->
+    <path d="M 34,38 L 22,50 L 38,48 Z" fill="#111" stroke="#000" stroke-width="2" stroke-linejoin="round"/>
+    
+    <!-- Scarf (Gryffindor Colors) -->
+    <path d="M 24,36 L 30,35 L 32,42 L 26,42 Z" fill="#7F0909" stroke="#000" stroke-width="2"/>
+    <line x1="26" y1="35.5" x2="28" y2="42" stroke="#FFC500" stroke-width="2"/>
+    
+    <!-- Back Leg over the broom -->
+    <rect x="32" y="44" width="8" height="6" rx="2" fill="#4A0E2E" stroke="#000" stroke-width="2"/>
+    <rect x="32" y="50" width="6" height="4" rx="2" fill="#222" stroke="#000" stroke-width="2"/>
+    
+    <!-- Arm reaching forward -->
+    <path d="M 30,38 L 18,42" stroke="#111" stroke-width="6" stroke-linecap="round"/>
+    
+    <!-- Hand holding handle -->
+    <circle cx="16" cy="42" r="3" fill="#FFDDBB" stroke="#000" stroke-width="1.5"/>
+    
+    <!-- Head -->
+    <circle cx="26" cy="24" r="14" fill="#FFDDBB" stroke="#000" stroke-width="2"/>
+    
+    <!-- Hair Base -->
+    <path d="M 12,24 C 12,8 40,8 40,24 C 40,16 32,10 26,12 C 20,10 12,16 12,24 Z" fill="#3B250F" stroke="#000" stroke-width="2"/>
+    
+    <!-- Messy Hair Tufts -->
+    <path d="M 12,24 L 10,20 L 14,22 L 16,16 L 20,18" fill="none" stroke="#3B250F" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M 20,18 L 22,14 L 26,16" fill="none" stroke="#3B250F" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+    
+    <!-- Glasses -->
+    <circle cx="18" cy="26" r="4.5" fill="none" stroke="#000" stroke-width="2"/>
+    <circle cx="30" cy="26" r="4.5" fill="none" stroke="#000" stroke-width="2"/>
+    <line x1="22.5" y1="26" x2="25.5" y2="26" stroke="#000" stroke-width="2"/>
+    <line x1="34.5" y1="26" x2="38" y2="24" stroke="#000" stroke-width="2"/>
+    
+    <!-- Eyes -->
+    <circle cx="17" cy="26" r="1.5" fill="#000"/>
+    <circle cx="29" cy="26" r="1.5" fill="#000"/>
+    
+    <!-- Lightning Scar -->
+    <path d="M 22,17 L 24,19 L 23,21" fill="none" stroke="#D35400" stroke-width="1.5" stroke-linejoin="miter"/>
+    
+    <!-- Smile -->
+    <path d="M 17,32 Q 19,34 21,32" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round"/>
+  </g>
+</svg>

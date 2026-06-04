@@ -1,15 +1,18 @@
-# DSA Revision Tracker
+# Beatle
 
-![DSA Revision Tracker](https://img.shields.io/badge/Status-Live-success)
-![React](https://img.shields.io/badge/React-18.x-blue)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue)
-![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.x-38B2AC)
+![Beatle](https://img.shields.io/badge/Status-Live-success)
+![React](https://img.shields.io/badge/React-18-61DAFB?logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.2-3178C6?logo=typescript)
+![Tailwind](https://img.shields.io/badge/TailwindCSS-3.4-38B2AC?logo=tailwindcss)
+![Vite](https://img.shields.io/badge/Vite-5.0-646CFF?logo=vite)
+![Clerk](https://img.shields.io/badge/Auth-Clerk-6C47FF)
+![Firebase](https://img.shields.io/badge/Database-Firebase-FFCA28?logo=firebase)
 
 **Live Demo:** [https://dsa-revision-tracker-dsa-tracker-two.vercel.app/](https://dsa-revision-tracker-dsa-tracker-two.vercel.app/)
 
 ## 🚀 Overview
 
-**DSA Revision Tracker** is a beautifully designed, highly interactive web application tailored for developers and students preparing for technical interviews. It helps you manage and track your Data Structures and Algorithms (DSA) practice. By leveraging confidence-based spaced repetition, the app intelligently schedules your next revision, ensuring you focus on the problems that need the most attention and build unshakeable muscle memory.
+**Beatle** is a beautifully designed, highly interactive web application tailored for developers and students preparing for technical interviews. It helps you manage and track your Data Structures and Algorithms (DSA) practice. By leveraging confidence-based spaced repetition, the app intelligently schedules your next revision, ensuring you focus on the problems that need the most attention and build unshakeable muscle memory.
 
 ## ✨ Features
 

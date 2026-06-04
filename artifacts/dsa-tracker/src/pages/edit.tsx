@@ -5,7 +5,7 @@ import {
   useUpdateQuestion,
   getListQuestionsQueryKey,
 } from "@workspace/api-client-react";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { ThemeSelector } from "@/components/ThemeSelector";
 import { QuestionForm } from "@/components/QuestionForm";
 import { ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -65,21 +65,21 @@ export default function EditQuestion() {
 
   if (isLoading) {
     return (
-      <div className="min-h-[100dvh] bg-background flex items-center justify-center text-muted-foreground">
+      <div className="min-h-[100dvh] bg-background bg-[image:var(--theme-bg-image)] bg-cover bg-center bg-fixed flex items-center justify-center text-muted-foreground after:absolute after:inset-0 after:bg-black/40 dark:after:bg-black/40 after:backdrop-blur-[2px] after:-z-10">
         Loading...
       </div>
     );
   }
 
   return (
-    <div className="min-h-[100dvh] bg-background relative z-0">
+    <div className="min-h-[100dvh] bg-background bg-[image:var(--theme-bg-image)] bg-cover bg-center bg-fixed relative z-0 after:absolute after:inset-0 after:bg-black/40 dark:after:bg-black/40 after:backdrop-blur-[2px] after:-z-10">
       {/* Ambient Background Orbs */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
-        <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-violet-600/10 dark:bg-violet-500/10 blur-[120px]" />
-        <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-cyan-600/10 dark:bg-cyan-500/10 blur-[120px]" />
+        <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-primary/10 dark:bg-primary/10 blur-[120px]" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-secondary/10 dark:bg-secondary/10 blur-[120px]" />
       </div>
 
-      <header className="border-b border-black/5 dark:border-white/5 bg-background/80 dark:bg-background/10 backdrop-blur-2xl sticky top-0 z-50 shadow-sm">
+      <header className="border-b border-black/10 dark:border-white/10 bg-white/60 dark:bg-black/20 backdrop-blur-md sticky top-0 z-50 shadow-sm dark:shadow-none">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link
@@ -92,11 +92,11 @@ export default function EditQuestion() {
               Edit Question
             </h1>
           </div>
-          <ThemeToggle />
+          <ThemeSelector />
         </div>
       </header>
 
-      <motion.main 
+      <motion.main
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, ease: "easeOut" }}

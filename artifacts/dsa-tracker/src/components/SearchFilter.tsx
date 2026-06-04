@@ -34,13 +34,13 @@ export function SearchFilter({
             placeholder="Search by question name..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="flex-1 border border-black/10 dark:border-white/10 bg-transparent rounded-full h-14 pl-14 focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:border-violet-500 dark:focus-visible:border-violet-500 text-base text-black dark:text-white transition-colors hover:bg-black/[0.03] dark:hover:bg-white/[0.03] placeholder:text-black/30 dark:placeholder:text-white/30"
+            className="flex-1 border border-black/10 dark:border-white/10 bg-white/60 dark:bg-transparent backdrop-blur-none shadow-none rounded-full h-14 pl-14 focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-primary dark:focus-visible:border-primary text-base text-black dark:text-white transition-all hover:bg-white hover:dark:bg-black/20 hover:backdrop-blur-sm hover:dark:shadow-md hover:dark:border-t-white/20 placeholder:text-black/50 dark:placeholder:text-white/50"
             data-testid="input-search"
           />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <Select value={confidenceFilter} onValueChange={setConfidenceFilter}>
-            <SelectTrigger className="border-black/10 dark:border-white/10 bg-transparent rounded-full h-12 text-black dark:text-white hover:bg-black/[0.03] dark:hover:bg-white/[0.03] transition-colors focus:ring-2 focus:ring-violet-500 focus:border-violet-500 dark:focus:border-violet-500 focus-visible:ring-2 focus-visible:ring-violet-500" data-testid="select-confidence">
+            <SelectTrigger className="border-black/10 dark:border-white/10 bg-white/60 dark:bg-transparent backdrop-blur-none shadow-none rounded-full h-12 text-black dark:text-white hover:bg-white hover:dark:bg-black/20 hover:backdrop-blur-sm hover:dark:shadow-md hover:dark:border-t-white/20 transition-all focus:ring-2 focus:ring-primary focus:border-primary dark:focus:border-primary focus-visible:ring-2 focus-visible:ring-primary" data-testid="select-confidence">
               <SelectValue placeholder="Confidence" />
             </SelectTrigger>
             <SelectContent className="bg-white dark:bg-black border-black/10 dark:border-white/10 text-black dark:text-white">
@@ -54,7 +54,7 @@ export function SearchFilter({
           </Select>
 
           <Select value={platformFilter} onValueChange={setPlatformFilter}>
-            <SelectTrigger className="border-black/10 dark:border-white/10 bg-transparent rounded-full h-12 text-black dark:text-white hover:bg-black/[0.03] dark:hover:bg-white/[0.03] transition-colors focus:ring-2 focus:ring-violet-500 focus:border-violet-500 dark:focus:border-violet-500 focus-visible:ring-2 focus-visible:ring-violet-500" data-testid="select-platform">
+            <SelectTrigger className="border-black/10 dark:border-white/10 bg-white/60 dark:bg-transparent backdrop-blur-none shadow-none rounded-full h-12 text-black dark:text-white hover:bg-white hover:dark:bg-black/20 hover:backdrop-blur-sm hover:dark:shadow-md hover:dark:border-t-white/20 transition-all focus:ring-2 focus:ring-primary focus:border-primary dark:focus:border-primary focus-visible:ring-2 focus-visible:ring-primary" data-testid="select-platform">
               <SelectValue placeholder="Platform" />
             </SelectTrigger>
             <SelectContent className="bg-white dark:bg-black border-black/10 dark:border-white/10 text-black dark:text-white">
@@ -66,7 +66,7 @@ export function SearchFilter({
           </Select>
 
           <Select value={tagFilter} onValueChange={setTagFilter}>
-            <SelectTrigger className="border-black/10 dark:border-white/10 bg-transparent rounded-full h-12 text-black dark:text-white hover:bg-black/[0.03] dark:hover:bg-white/[0.03] transition-colors focus:ring-2 focus:ring-violet-500 focus:border-violet-500 dark:focus:border-violet-500 focus-visible:ring-2 focus-visible:ring-violet-500" data-testid="select-tag">
+            <SelectTrigger className="border-black/10 dark:border-white/10 bg-white/60 dark:bg-transparent backdrop-blur-none shadow-none rounded-full h-12 text-black dark:text-white hover:bg-white hover:dark:bg-black/20 hover:backdrop-blur-sm hover:dark:shadow-md hover:dark:border-t-white/20 transition-all focus:ring-2 focus:ring-primary focus:border-primary dark:focus:border-primary focus-visible:ring-2 focus-visible:ring-primary" data-testid="select-tag">
               <SelectValue placeholder="Tag" />
             </SelectTrigger>
             <SelectContent className="bg-white dark:bg-black border-black/10 dark:border-white/10 text-black dark:text-white">
@@ -78,7 +78,7 @@ export function SearchFilter({
           </Select>
 
           <Select value={sortBy} onValueChange={setSortBy}>
-            <SelectTrigger className="border-black/10 dark:border-white/10 bg-transparent rounded-full h-12 text-black dark:text-white hover:bg-black/[0.03] dark:hover:bg-white/[0.03] transition-colors focus:ring-2 focus:ring-violet-500 focus:border-violet-500 dark:focus:border-violet-500 focus-visible:ring-2 focus-visible:ring-violet-500" data-testid="select-sort">
+            <SelectTrigger className="border-black/10 dark:border-white/10 bg-white/60 dark:bg-transparent backdrop-blur-none shadow-none rounded-full h-12 text-black dark:text-white hover:bg-white hover:dark:bg-black/20 hover:backdrop-blur-sm hover:dark:shadow-md hover:dark:border-t-white/20 transition-all focus:ring-2 focus:ring-primary focus:border-primary dark:focus:border-primary focus-visible:ring-2 focus-visible:ring-primary" data-testid="select-sort">
               <SelectValue placeholder="Sort By" />
             </SelectTrigger>
             <SelectContent className="bg-white dark:bg-black border-black/10 dark:border-white/10 text-black dark:text-white">

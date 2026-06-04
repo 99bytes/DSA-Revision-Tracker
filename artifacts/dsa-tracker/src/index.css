@@ -5,7 +5,7 @@
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:is(.dark *, .github-dark *, .terminal-hacker *, .leetcode-elite *, .cyberpunk *, .harry-potter *));
 
 @theme inline {
   --color-background: hsl(var(--background));
@@ -21,6 +21,10 @@
   --color-popover: hsl(var(--popover));
   --color-popover-foreground: hsl(var(--popover-foreground));
   --color-popover-border: hsl(var(--popover-border));
+
+  --color-ring-1: hsl(var(--ring-1));
+  --color-ring-2: hsl(var(--ring-2));
+  --color-ring-3: hsl(var(--ring-3));
 
   --color-primary: hsl(var(--primary));
   --color-primary-foreground: hsl(var(--primary-foreground));
@@ -41,6 +45,12 @@
   --color-destructive: hsl(var(--destructive));
   --color-destructive-foreground: hsl(var(--destructive-foreground));
   --color-destructive-border: var(--destructive-border);
+
+  --color-success: hsl(var(--success));
+  --color-success-foreground: hsl(var(--success-foreground));
+
+  --color-warning: hsl(var(--warning));
+  --color-warning-foreground: hsl(var(--warning-foreground));
 
   --color-chart-1: hsl(var(--chart-1));
   --color-chart-2: hsl(var(--chart-2));
@@ -115,6 +125,12 @@
   --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 210 40% 98%;
 
+  --success: 142 71% 45%;
+  --success-foreground: 210 40% 98%;
+
+  --warning: 38 92% 50%;
+  --warning-foreground: 210 40% 98%;
+
   --input: 235 15% 92%;
   --ring: 258 84% 60%;
 
@@ -147,6 +163,10 @@
   --muted-border: hsl(from hsl(var(--muted)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
   --accent-border: hsl(from hsl(var(--accent)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
   --destructive-border: hsl(from hsl(var(--destructive)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+
+  --ring-1: 262 83% 66%;
+  --ring-2: 193 100% 50%;
+  --ring-3: 41 100% 50%;
 }
 
 .dark {
@@ -188,18 +208,25 @@
 
   --muted: 240 10% 10%;
   --muted-foreground: 240 5% 65%;
-  --background: 0 0% 0%; /* Pure Black */
+  --background: 0 0% 0%;
+  /* Pure Black */
   --foreground: 0 0% 100%;
-  --border: 0 0% 20%; /* Thin white/grey borders */
+  --border: 0 0% 20%;
+  /* Thin white/grey borders */
 
   --card: 0 0% 3%;
   --card-foreground: 0 0% 100%;
   --card-border: 0 0% 25%;
 
+  --ring-1: 262 83% 66%;
+  --ring-2: 193 100% 50%;
+  --ring-3: 41 100% 50%;
+
   --sidebar: 0 0% 3%;
   --sidebar-foreground: 0 0% 100%;
   --sidebar-border: 0 0% 20%;
-  --sidebar-primary: 0 0% 100%; /* White */
+  --sidebar-primary: 0 0% 100%;
+  /* White */
   --sidebar-primary-foreground: 0 0% 0%;
   --sidebar-accent: 0 0% 10%;
   --sidebar-accent-foreground: 0 0% 100%;
@@ -209,7 +236,8 @@
   --popover-foreground: 0 0% 100%;
   --popover-border: 0 0% 20%;
 
-  --primary: 0 0% 100%; /* White */
+  --primary: 0 0% 100%;
+  /* White */
   --primary-foreground: 0 0% 0%;
 
   --secondary: 0 0% 10%;
@@ -223,6 +251,12 @@
 
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
+
+  --success: 142 71% 45%;
+  --success-foreground: 0 0% 100%;
+
+  --warning: 38 92% 50%;
+  --warning-foreground: 0 0% 100%;
 
   --input: 0 0% 20%;
   --ring: 0 0% 100%;
@@ -244,9 +278,275 @@
   --shadow-2xl: 0px 2px 0px 0px rgba(0, 0, 0, 0.5);
 }
 
+/* GITHUB DARK */
+.github-dark {
+  --background: 216 28% 7%;
+  --foreground: 210 17% 82%;
+  --border: 212 12% 21%;
+  --card: 215 21% 11%;
+  --card-foreground: 210 17% 82%;
+  --card-border: 212 12% 21%;
+  --sidebar: 215 21% 11%;
+  --sidebar-foreground: 210 17% 82%;
+  --sidebar-border: 212 12% 21%;
+  --sidebar-primary: 212 100% 67%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 212 12% 21%;
+  --sidebar-accent-foreground: 210 17% 82%;
+  --sidebar-ring: 212 100% 67%;
+  --popover: 215 21% 11%;
+  --popover-foreground: 210 17% 82%;
+  --popover-border: 212 12% 21%;
+  --primary: 212 100% 67%;
+  --primary-foreground: 216 28% 7%;
+  --secondary: 212 12% 21%;
+  --secondary-foreground: 210 17% 82%;
+  --muted: 212 12% 21%;
+  --muted-foreground: 212 12% 50%;
+  --accent: 212 100% 67%;
+  --accent-foreground: 0 0% 100%;
+  --success: 128 49% 49%;
+  --success-foreground: 0 0% 100%;
+  --warning: 41 72% 48%;
+  --warning-foreground: 0 0% 100%;
+  --destructive: 357 93% 63%;
+  --destructive-foreground: 0 0% 100%;
+  --input: 212 12% 21%;
+  --ring: 212 100% 67%;
+
+  --ring-1: 212 100% 67%;
+  --ring-2: 128 49% 49%;
+  --ring-3: 41 72% 48%;
+}
+
+/* TERMINAL HACKER */
+.terminal-hacker {
+  --background: 0 0% 2%;
+  --foreground: 152 100% 50%;
+  --border: 0 0% 15%;
+  --card: 0 0% 4%;
+  --card-foreground: 152 100% 50%;
+  --card-border: 152 100% 50%;
+  --sidebar: 0 0% 4%;
+  --sidebar-foreground: 152 100% 50%;
+  --sidebar-border: 152 100% 50%;
+  --sidebar-primary: 152 100% 50%;
+  --sidebar-primary-foreground: 0 0% 0%;
+  --sidebar-accent: 0 0% 15%;
+  --sidebar-accent-foreground: 152 100% 50%;
+  --sidebar-ring: 152 100% 50%;
+  --popover: 0 0% 4%;
+  --popover-foreground: 152 100% 50%;
+  --popover-border: 152 100% 50%;
+  --primary: 152 100% 50%;
+  --primary-foreground: 0 0% 0%;
+  --secondary: 193 100% 50%;
+  --secondary-foreground: 0 0% 0%;
+  --muted: 0 0% 10%;
+  --muted-foreground: 152 50% 30%;
+  --accent: 152 100% 50%;
+  --accent-foreground: 0 0% 0%;
+  --success: 152 100% 50%;
+  --success-foreground: 0 0% 0%;
+  --warning: 50 100% 52%;
+  --warning-foreground: 0 0% 0%;
+  --destructive: 349 100% 65%;
+  --destructive-foreground: 0 0% 0%;
+  --input: 0 0% 15%;
+  --ring: 152 100% 50%;
+
+  --ring-1: 152 100% 50%;
+  --ring-2: 24 100% 50%;
+  --ring-3: 50 100% 52%;
+}
+
+/* LEETCODE ELITE */
+.leetcode-elite {
+  --background: 221 39% 11%;
+  --foreground: 210 17% 82%;
+  --border: 215 28% 25%;
+  --card: 215 28% 17%;
+  --card-foreground: 210 17% 82%;
+  --card-border: 215 28% 25%;
+  --sidebar: 215 28% 17%;
+  --sidebar-foreground: 210 17% 82%;
+  --sidebar-border: 215 28% 25%;
+  --sidebar-primary: 36 100% 54%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 215 28% 25%;
+  --sidebar-accent-foreground: 210 17% 82%;
+  --sidebar-ring: 36 100% 54%;
+  --popover: 215 28% 17%;
+  --popover-foreground: 210 17% 82%;
+  --popover-border: 215 28% 25%;
+  --primary: 36 100% 54%;
+  --primary-foreground: 221 39% 11%;
+  --secondary: 215 91% 57%;
+  --secondary-foreground: 0 0% 100%;
+  --muted: 215 28% 25%;
+  --muted-foreground: 215 20% 60%;
+  --accent: 36 100% 54%;
+  --accent-foreground: 0 0% 100%;
+  --success: 173 100% 36%;
+  --success-foreground: 0 0% 100%;
+  --warning: 36 100% 54%;
+  --warning-foreground: 221 39% 11%;
+  --destructive: 0 100% 68%;
+  --destructive-foreground: 0 0% 100%;
+  --input: 215 28% 25%;
+  --ring: 36 100% 54%;
+
+  --ring-1: 36 100% 54%;
+  --ring-2: 215 91% 57%;
+  --ring-3: 173 100% 36%;
+}
+
+/* CYBERPUNK */
+.cyberpunk {
+  --background: 255 100% 4%;
+  --foreground: 270 100% 90%;
+  --border: 270 100% 15%;
+  --card: 270 100% 7%;
+  --card-foreground: 270 100% 90%;
+  --card-border: 270 100% 15%;
+  --sidebar: 270 100% 7%;
+  --sidebar-foreground: 270 100% 90%;
+  --sidebar-border: 270 100% 15%;
+  --sidebar-primary: 273 65% 58%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 270 100% 15%;
+  --sidebar-accent-foreground: 270 100% 90%;
+  --sidebar-ring: 273 65% 58%;
+  --popover: 270 100% 7%;
+  --popover-foreground: 270 100% 90%;
+  --popover-border: 270 100% 15%;
+  --primary: 273 65% 58%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 172 100% 48%;
+  --secondary-foreground: 0 0% 0%;
+  --muted: 270 100% 15%;
+  --muted-foreground: 270 50% 60%;
+  --accent: 334 100% 50%;
+  --accent-foreground: 0 0% 100%;
+  --success: 172 100% 48%;
+  --success-foreground: 0 0% 0%;
+  --warning: 334 100% 50%;
+  --warning-foreground: 0 0% 100%;
+  --destructive: 334 100% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --input: 270 100% 15%;
+  --ring: 273 65% 58%;
+
+  --ring-1: 273 65% 58%;
+  --ring-2: 172 100% 48%;
+  --ring-3: 330 100% 60%;
+}
+
+/* HARRY POTTER */
+.harry-potter {
+  --theme-bg-image: url('/harry-potter-bg.jpg');
+  --background: 20 20% 8%; /* Very dark, neutral warm black */
+  --foreground: 46 90% 90%; /* Gold text */
+  --border: 359 60% 20%;
+  --card: 20 20% 12%;
+  --card-foreground: 46 90% 90%;
+  --card-border: 359 60% 20%;
+  --sidebar: 20 20% 10%;
+  --sidebar-foreground: 46 90% 90%;
+  --sidebar-border: 359 60% 20%;
+  --sidebar-primary: 46 100% 40%;
+  --sidebar-primary-foreground: 20 20% 8%;
+  --sidebar-accent: 359 60% 20%;
+  --sidebar-accent-foreground: 46 100% 40%;
+  --sidebar-ring: 46 100% 40%;
+  --popover: 20 20% 12%;
+  --popover-foreground: 46 90% 90%;
+  --popover-border: 359 60% 20%;
+  --primary: 46 100% 40%; /* Gold */
+  --primary-foreground: 20 20% 8%; 
+  --secondary: 359 80% 25%; /* Deep Red */
+  --secondary-foreground: 46 90% 90%;
+  --muted: 20 20% 15%;
+  --muted-foreground: 46 50% 60%;
+  --accent: 46 100% 40%; 
+  --accent-foreground: 20 20% 8%;
+  --success: 135 60% 40%; 
+  --success-foreground: 20 20% 8%;
+  --warning: 46 100% 48%; 
+  --warning-foreground: 20 20% 8%;
+  --destructive: 0 100% 40%; 
+  --destructive-foreground: 46 90% 90%;
+  --input: 359 60% 20%;
+  --ring: 46 100% 40%;
+
+  --ring-1: 46 100% 45%; /* Snitch Gold */
+  --ring-2: 359 80% 45%; /* Gryffindor Red */
+  --ring-3: 25 70% 45%;  /* Bronze/Leather */
+
+  cursor: url("/harry-cursor.png") 4 4, auto;
+  
+  /* Fonts and Text Visibility */
+  font-family: 'IM Fell English', serif;
+}
+
+.harry-potter h1, 
+.harry-potter h2, 
+.harry-potter h3, 
+.harry-potter .font-bold, 
+.harry-potter .font-extrabold {
+  font-family: 'Henny Penny', cursive;
+  font-weight: normal;
+}
+
+/* Force bright text with strong dark shadow for readability against the map */
+.harry-potter .text-white,
+.harry-potter .dark\:text-white,
+.harry-potter .text-white\/70,
+.harry-potter .dark\:text-white\/70,
+.harry-potter .text-black,
+.harry-potter .text-muted-foreground,
+.harry-potter span,
+.harry-potter p {
+  color: #fdf6e3 !important; /* Bright parchment/off-white */
+  text-shadow: 
+    0px 2px 4px rgba(0, 0, 0, 0.9),
+    0px 0px 6px rgba(0, 0, 0, 0.9),
+    0px 0px 10px rgba(0, 0, 0, 1);
+  font-weight: 700 !important;
+}
+
+.harry-potter h1, 
+.harry-potter h2, 
+.harry-potter h3,
+.harry-potter h4,
+.harry-potter .font-bold {
+  color: #fde68a !important; /* Golden for headings */
+  text-shadow: 
+    -1px -1px 0 #2c1a10,  
+     1px -1px 0 #2c1a10,
+    -1px  1px 0 #2c1a10,
+     1px  1px 0 #2c1a10,
+     0px 4px 8px rgba(0, 0, 0, 0.9);
+  font-weight: bold !important;
+}
+
+.harry-potter a, 
+.harry-potter button, 
+.harry-potter [role="button"], 
+.harry-potter .cursor-pointer,
+.harry-potter [role="menuitem"],
+.harry-potter [role="option"],
+.harry-potter [data-state] {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><text y='24' font-size='24'>✨</text></svg>") 16 16, pointer !important;
+}
+
+
 @layer base {
   * {
     @apply border-border;
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
   }
 
   body {
@@ -259,9 +559,12 @@
   ::-webkit-scrollbar {
     display: none;
   }
+
   * {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
   }
 
   /* Premium Ambient Glows for Light Mode */
@@ -269,10 +572,10 @@
     content: "";
     position: fixed;
     inset: 0;
-    background: 
-      radial-gradient(circle at 15% 50%, rgba(139, 92, 246, 0.05), transparent 45%),
-      radial-gradient(ellipse at 85% 30%, rgba(6, 182, 212, 0.05), transparent 45%),
-      radial-gradient(circle at 50% 100%, rgba(139, 92, 246, 0.03), transparent 50%);
+    background:
+      radial-gradient(circle at 15% 50%, hsla(var(--primary) / 0.05), transparent 45%),
+      radial-gradient(ellipse at 85% 30%, hsla(var(--secondary) / 0.05), transparent 45%),
+      radial-gradient(circle at 50% 100%, hsla(var(--primary) / 0.03), transparent 50%);
     pointer-events: none;
     z-index: -1;
     mix-blend-mode: multiply;
@@ -292,10 +595,10 @@
     content: "";
     position: fixed;
     inset: 0;
-    background: 
-      radial-gradient(circle at 15% 50%, rgba(139, 92, 246, 0.08), transparent 45%),
-      radial-gradient(ellipse at 85% 30%, rgba(6, 182, 212, 0.08), transparent 45%),
-      radial-gradient(circle at 50% 100%, rgba(139, 92, 246, 0.05), transparent 50%);
+    background:
+      radial-gradient(circle at 15% 50%, hsla(var(--primary) / 0.08), transparent 45%),
+      radial-gradient(ellipse at 85% 30%, hsla(var(--secondary) / 0.08), transparent 45%),
+      radial-gradient(circle at 50% 100%, hsla(var(--primary) / 0.05), transparent 50%);
     pointer-events: none;
     z-index: -1;
     mix-blend-mode: screen;

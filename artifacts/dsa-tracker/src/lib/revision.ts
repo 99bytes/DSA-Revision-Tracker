@@ -20,13 +20,13 @@ export function getDashboardStats(questions: Question[]) {
   const total = questions.length;
   const weak = questions.filter(q => q.confidence <= 2).length;
   const strong = questions.filter(q => q.confidence >= 4).length;
-  
+
   const weakTags = questions.filter(q => q.confidence <= 2).flatMap(q => q.tags);
   const tagCounts = weakTags.reduce((acc, tag) => {
     acc[tag] = (acc[tag] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
-  
+
   let mostFrequentWeakTopic = "None";
   let maxCount = 0;
   for (const [tag, count] of Object.entries(tagCounts)) {
@@ -36,5 +36,25 @@ export function getDashboardStats(questions: Question[]) {
     }
   }
 
-  return { total, weak, strong, mostFrequentWeakTopic };
+  const now = new Date();
+  const startOfToday = startOfDay(now);
+  const endOfWeekDate = addDays(startOfToday, 7);
+
+  let dueTodayCount = 0;
+  let dueThisWeekCount = 0;
+  let overdueCount = 0;
+
+  for (const q of questions) {
+    const nextRev = new Date(calculateNextRevision(q.lastRevised, q.confidence));
+    if (isBefore(nextRev, startOfToday)) {
+      overdueCount++;
+    } else if (isBefore(nextRev, addDays(startOfToday, 1))) {
+      dueTodayCount++;
+      dueThisWeekCount++;
+    } else if (isBefore(nextRev, endOfWeekDate)) {
+      dueThisWeekCount++;
+    }
+  }
+
+  return { total, weak, strong, mostFrequentWeakTopic, dueTodayCount, dueThisWeekCount, overdueCount };
 }

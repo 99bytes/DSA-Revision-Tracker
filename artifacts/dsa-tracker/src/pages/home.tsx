@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { Link } from "wouter";
 import { Plus, LogOut } from "lucide-react";
+import { AlienIcon } from "@/components/AlienIcon";
 import { useQueryClient } from "@tanstack/react-query";
 import { useClerk, useUser } from "@clerk/react";
 import { motion } from "framer-motion";
@@ -10,7 +11,7 @@ import {
   useUpdateQuestion,
   useDeleteQuestion,
 } from "@workspace/api-client-react";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { ThemeSelector } from "@/components/ThemeSelector";
 import { Dashboard } from "@/components/Dashboard";
 import { SearchFilter } from "@/components/SearchFilter";
 import { QuestionTable } from "@/components/QuestionTable";
@@ -122,29 +123,26 @@ export default function Home() {
   };
 
   return (
-    <div className="h-[100dvh] flex flex-col bg-background overflow-hidden relative z-0">
+    <div className="h-[100dvh] flex flex-col bg-slate-50 dark:bg-background bg-[image:var(--theme-bg-image)] bg-cover bg-center bg-fixed overflow-hidden relative z-0 after:absolute after:inset-0 after:bg-black/40 dark:after:bg-black/40 after:backdrop-blur-[2px] after:-z-10">
       {/* Ambient Background Orbs */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
-        <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-violet-600/10 dark:bg-violet-500/10 blur-[120px]" />
-        <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-cyan-600/10 dark:bg-cyan-500/10 blur-[120px]" />
+      <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10 hidden dark:block">
+        <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-primary/10 blur-[120px]" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-secondary/10 blur-[120px]" />
       </div>
 
-      <header className="shrink-0 bg-background/80 dark:bg-background/10 backdrop-blur-2xl z-50 shadow-sm">
+      <header className="shrink-0 bg-white/60 dark:bg-black/20 backdrop-blur-md z-50 shadow-sm dark:shadow-none border-b border-black/10 dark:border-white/10">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <img src={`${basePath}/logo.svg`} alt="Logo" className="w-9 h-9 shrink-0" />
+            <AlienIcon className="w-9 h-9 shrink-0 text-primary drop-shadow-[0_0_8px_rgba(var(--primary),0.5)]" />
             <h1 className="hidden sm:block text-xl font-extrabold tracking-tight text-black dark:text-white truncate">
-              Revision{" "}
-              <span className="text-violet-600 dark:text-violet-400 font-bold">
-                Tracker
-              </span>
+              Beatle
             </h1>
           </div>
           <div className="flex items-center gap-3">
-            <ThemeToggle />
+            <ThemeSelector />
             {user && (
               <div className="hidden sm:flex items-center gap-2 text-sm text-black/70 dark:text-white/70 bg-black/[0.02] dark:bg-white/[0.02] px-3 py-1.5 rounded-full border border-black/5 dark:border-white/5">
-                <div className="w-6 h-6 rounded-full bg-violet-500/20 flex items-center justify-center text-violet-600 dark:text-violet-400 font-bold text-[10px]">
+                <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary dark:text-primary font-bold text-[10px]">
                   {(user.firstName?.[0] ?? user.emailAddresses?.[0]?.emailAddress?.[0] ?? "U").toUpperCase()}
                 </div>
                 <span className="font-semibold text-black dark:text-white text-xs">{user.firstName ?? user.emailAddresses?.[0]?.emailAddress}</span>
@@ -159,7 +157,7 @@ export default function Home() {
             </button>
             <Link
               href="/add"
-              className="inline-flex items-center justify-center rounded-full text-sm font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 disabled:opacity-50 bg-black hover:bg-black/80 dark:bg-neutral-200 dark:hover:bg-neutral-300 text-white dark:text-black hover:scale-105 h-10 w-10 sm:w-auto p-0 sm:py-2 sm:px-6 shadow-md border-0 shrink-0"
+              className="inline-flex items-center justify-center rounded-full text-sm font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:opacity-50 bg-black hover:bg-black/80 dark:bg-neutral-200 dark:hover:bg-neutral-300 text-white dark:text-black hover:scale-105 h-10 w-10 sm:w-auto p-0 sm:py-2 sm:px-6 shadow-md border-0 shrink-0"
               data-testid="link-add-question"
             >
               <Plus className="w-5 h-5 sm:w-4 sm:h-4 sm:mr-2" />
@@ -185,7 +183,7 @@ export default function Home() {
             className="space-y-5 relative"
           >
             <div className="flex items-center gap-3">
-              <h2 className="text-xl font-extrabold tracking-tight text-black dark:text-white">
+              <h2 className="text-xl font-extrabold tracking-tight text-black dark:text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                 Your Tracked Questions
               </h2>
               <span className="inline-flex items-center justify-center h-6 min-w-6 px-2.5 rounded-full bg-black/10 dark:bg-white/10 border border-black/10 dark:border-white/10 text-black dark:text-white text-xs font-black shadow-none">

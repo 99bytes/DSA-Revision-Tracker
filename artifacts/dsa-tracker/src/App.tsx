@@ -192,6 +192,9 @@ function ClerkProviderWithRoutes() {
       appearance={dynamicAppearance}
       signInUrl={`${basePath}/sign-in`}
       signUpUrl={`${basePath}/sign-up`}
+      fallbackRedirectUrl="/"
+      signInFallbackRedirectUrl="/"
+      signUpFallbackRedirectUrl="/"
       localization={{
         signIn: {
           start: {

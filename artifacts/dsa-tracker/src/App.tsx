@@ -6,6 +6,7 @@ import { setAuthTokenGetter } from "@workspace/api-client-react";
 import { publishableKeyFromHost } from "@clerk/react/internal";
 import { shadcn } from "@clerk/themes";
 import { Toaster } from "@/components/ui/toaster";
+import { Toaster as SonnerToaster } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider, useTheme } from "next-themes";
 import NotFound from "@/pages/not-found";
@@ -258,6 +259,7 @@ function App() {
           <ClerkProviderWithRoutes />
         </WouterRouter>
         <Toaster />
+        <SonnerToaster position="top-center" />
       </TooltipProvider>
     </ThemeProvider>
   );
